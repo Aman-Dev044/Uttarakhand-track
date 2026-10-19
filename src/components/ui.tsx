@@ -2,6 +2,7 @@
 
 import { motion, useInView, animate } from "motion/react";
 import { useEffect, useRef, useState } from "react";
+import { site } from "@/data/site";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -108,8 +109,10 @@ export function Logo({ light = true }: { light?: boolean }) {
         <CompassGlyph className="size-6 text-saffron" />
       </span>
       <span className={`leading-none ${light ? "text-snow" : "text-ink"}`}>
-        <span className="block font-display text-lg font-semibold tracking-tight">Trekking Compass</span>
-        <span className="mt-1 block text-[10px] uppercase tracking-[0.3em] opacity-60">Dehradun · Since 2018</span>
+        <span className="block font-display text-lg font-semibold tracking-tight">{site.name}</span>
+        <span className="mt-1 block text-[10px] uppercase tracking-[0.3em] opacity-60">
+          {site.address.locality} · Since {site.foundedYear}
+        </span>
       </span>
     </span>
   );

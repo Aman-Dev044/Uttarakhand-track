@@ -98,7 +98,7 @@ export function Footer() {
         <div className="col-span-2 md:col-span-3 lg:col-span-1">
           <Logo />
           <p className="mt-6 max-w-sm text-sm leading-relaxed text-snow/60">
-            Trekking Compass is a Dehradun-based trekking and travel organisation running guided Himalayan treks, Char
+            {site.name} is a {site.address.locality}-based trekking and travel organisation running guided Himalayan treks, Char
             Dham Yatras and expeditions across Uttarakhand, Himachal Pradesh and Jammu & Kashmir.
           </p>
           <address className="mt-8 space-y-3 text-sm not-italic text-snow/75">
@@ -136,7 +136,9 @@ export function Footer() {
       </div>
 
       <div className="mx-auto flex max-w-7xl flex-col gap-6 border-t border-snow/10 px-5 py-8 text-sm text-snow/50 sm:px-8 md:flex-row md:items-center md:justify-between">
-        <p>© 2018–2026 {site.name}. All rights reserved.</p>
+        <p>
+          © {site.foundedYear}–2026 {site.name}. All rights reserved.
+        </p>
         <a
           href={site.officialTourism}
           target="_blank"

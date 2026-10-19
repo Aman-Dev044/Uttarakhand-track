@@ -26,7 +26,7 @@ const tiro = Tiro_Devanagari_Hindi({
   preload: false,
 });
 
-const title = "Uttarakhand Treks & Char Dham Yatra 2026–27 | Trekking Compass";
+const title = `Uttarakhand Treks & Char Dham Yatra 2026–27 | ${site.name}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -66,8 +66,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "@trekkingcompass",
-    creator: "@trekkingcompass",
+    site: site.twitterHandle,
+    creator: site.twitterHandle,
     title,
     description: site.description,
   },
@@ -85,7 +85,7 @@ export const metadata: Metadata = {
   formatDetection: { telephone: true, email: true, address: false },
   other: {
     "geo.region": "IN-UT",
-    "geo.placename": "Dehradun, Uttarakhand",
+    "geo.placename": `${site.address.locality}, ${site.address.region}`,
   },
 };
 

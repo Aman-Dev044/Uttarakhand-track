@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { advantages, pillars } from "@/data/content";
+import { site } from "@/data/site";
 import { Counter, Reveal, SectionHeading } from "./ui";
 
 export function Advantage() {
@@ -9,7 +10,7 @@ export function Advantage() {
         <div>
           <SectionHeading
             id="advantage-title"
-            eyebrow="The Trekking Compass advantage"
+            eyebrow={`The ${site.name} advantage`}
             title="Mountains are wild."
             accent="Your trek shouldn't be."
             description="We're a Dehradun-born team of mountaineers, guides and people from the very villages you'll walk through. Here's what that means on the trail."

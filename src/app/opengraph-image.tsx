@@ -1,8 +1,9 @@
 import { ImageResponse } from "next/og";
 import { join } from "node:path";
 import { readFile } from "node:fs/promises";
+import { site } from "@/data/site";
 
-export const alt = "Trekking Compass: Himalayan treks and Char Dham Yatra in Uttarakhand";
+export const alt = `${site.name}: Himalayan treks and Char Dham Yatra in Uttarakhand`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -27,7 +28,7 @@ export default function OpengraphImage() {
           }}
         />
         <div style={{ position: "relative", display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 80px", color: "#f6f2ea" }}>
-          <div style={{ fontSize: 24, letterSpacing: 6, textTransform: "uppercase", color: "#ffb169" }}>Trekking Compass · Uttarakhand</div>
+          <div style={{ fontSize: 24, letterSpacing: 6, textTransform: "uppercase", color: "#ffb169" }}>{`${site.name} · Uttarakhand`}</div>
           <div style={{ fontSize: 92, lineHeight: 0.95, marginTop: 24, fontWeight: 300, maxWidth: 760 }}>Trek into your own story.</div>
           <div style={{ fontSize: 30, marginTop: 32, opacity: 0.8, maxWidth: 700 }}>
             150+ Himalayan treks · Char Dham Yatra · Expeditions

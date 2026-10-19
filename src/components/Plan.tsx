@@ -7,12 +7,16 @@ import { ArrowRight, CheckCircle2, Mail, Phone } from "lucide-react";
 import { site, telHref } from "@/data/site";
 import { treks } from "@/data/content";
 import { ease } from "./ui";
+import { Select } from "./Select";
+
+const trekOptions = ["Char Dham Yatra", ...treks.map((t) => t.name), "Not sure yet"].map((v) => ({ value: v, label: v }));
 
 export function Plan() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
   const [sent, setSent] = useState(false);
+  const [trek, setTrek] = useState("");
 
   // Frontend only: wire this to your CRM or email API
   function submit(e: React.FormEvent<HTMLFormElement>) {
@@ -21,7 +25,7 @@ export function Plan() {
   }
 
   const input =
-    "w-full rounded-2xl border border-snow/15 bg-snow/5 px-4 py-3.5 text-snow placeholder:text-snow/40 outline-none transition focus:border-saffron focus:bg-snow/10 [&>option]:text-ink";
+    "w-full rounded-2xl border border-snow/15 bg-snow/5 px-4 py-3.5 text-snow placeholder:text-snow/40 outline-none transition focus:border-saffron focus:bg-snow/10";
 
   return (
     <section id="plan" ref={ref} aria-labelledby="plan-title" className="relative isolate overflow-hidden bg-ink py-24 text-snow sm:py-32">
@@ -92,19 +96,7 @@ export function Plan() {
                   <span className="sr-only">Email</span>
                   <input name="email" type="email" autoComplete="email" placeholder="Email (optional)" className={input} />
                 </label>
-                <label>
-                  <span className="sr-only">Trek or yatra</span>
-                  <select name="trek" defaultValue="" className={input}>
-                    <option value="" disabled>
-                      Trek or yatra
-                    </option>
-                    <option>Char Dham Yatra</option>
-                    {treks.map((t) => (
-                      <option key={t.slug}>{t.name}</option>
-                    ))}
-                    <option>Not sure yet</option>
-                  </select>
-                </label>
+                <Select name="trek" label="Trek or yatra" placeholder="Trek or yatra" value={trek} onChange={setTrek} options={trekOptions} />
                 <label>
                   <span className="sr-only">Group size</span>
                   <input name="group" type="number" min={1} max={40} placeholder="Group size" className={input} />

@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import credits from "@/data/image-credits.json";
 import Link from "next/link";
 import { Logo } from "@/components/ui";
+import { site } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "Photo credits",
-  description: "Attribution for the photographs used on Trekking Compass, sourced from Wikimedia Commons.",
+  description: `Attribution for the photographs used on ${site.name}, sourced from Wikimedia Commons.`,
   alternates: { canonical: "/credits" },
   robots: { index: false, follow: true },
 };

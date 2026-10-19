@@ -7,6 +7,21 @@ import { ArrowDownRight, Search } from "lucide-react";
 import heroImg from "../../public/images/hero.jpg";
 import { months } from "@/data/content";
 import { ease } from "./ui";
+import { Select } from "./Select";
+
+const regionOptions = [
+  { value: "All", label: "All regions" },
+  { value: "Uttarakhand", label: "Uttarakhand" },
+  { value: "Himachal", label: "Himachal Pradesh" },
+  { value: "Kashmir", label: "Jammu & Kashmir" },
+];
+const monthOptions = [{ value: "", label: "Any month" }, ...months.map((m, i) => ({ value: String(i + 1), label: m }))];
+const gradeOptions = [
+  { value: "All", label: "Any level" },
+  { value: "Easy", label: "Easy, first trek" },
+  { value: "Moderate", label: "Moderate" },
+  { value: "Difficult", label: "Difficult" },
+];
 
 export type TrekFilterDetail = { state: string; grade: string; month: number | null };
 export const TREK_FILTER_EVENT = "trek-filter";
@@ -165,9 +180,6 @@ function TripFinder() {
     document.getElementById("treks")?.scrollIntoView({ behavior: "smooth" });
   }
 
-  const field =
-    "w-full appearance-none bg-transparent text-base font-semibold text-snow outline-none [&>option]:text-ink";
-
   return (
     <motion.form
       onSubmit={submit}
@@ -177,35 +189,16 @@ function TripFinder() {
       transition={{ duration: 1, ease, delay: 1.25 }}
       className="absolute inset-x-4 bottom-10 z-10 mx-auto grid max-w-4xl grid-cols-2 gap-px overflow-hidden rounded-3xl bg-snow/15 ring-1 ring-snow/20 backdrop-blur-xl sm:inset-x-8 md:grid-cols-[1fr_1fr_1fr_auto] lg:bottom-14"
     >
-      <label className="bg-ink/40 px-5 py-4">
-        <span className="block text-[11px] uppercase tracking-[0.2em] text-snow/60">Where</span>
-        <select value={state} onChange={(e) => setState(e.target.value)} className={field}>
-          <option value="All">All regions</option>
-          <option value="Uttarakhand">Uttarakhand</option>
-          <option value="Himachal">Himachal Pradesh</option>
-          <option value="Kashmir">Jammu & Kashmir</option>
-        </select>
-      </label>
-      <label className="bg-ink/40 px-5 py-4">
-        <span className="block text-[11px] uppercase tracking-[0.2em] text-snow/60">When</span>
-        <select value={month} onChange={(e) => setMonth(e.target.value)} className={field}>
-          <option value="">Any month</option>
-          {months.map((m, i) => (
-            <option key={m} value={i + 1}>
-              {m}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label className="col-span-2 bg-ink/40 px-5 py-4 md:col-span-1">
-        <span className="block text-[11px] uppercase tracking-[0.2em] text-snow/60">Difficulty</span>
-        <select value={grade} onChange={(e) => setGrade(e.target.value)} className={field}>
-          <option value="All">Any level</option>
-          <option value="Easy">Easy, first trek</option>
-          <option value="Moderate">Moderate</option>
-          <option value="Difficult">Difficult</option>
-        </select>
-      </label>
+      <Select variant="glass" label="Where" value={state} onChange={setState} options={regionOptions} className="bg-ink/40 px-5 py-4" />
+      <Select variant="glass" label="When" value={month} onChange={setMonth} options={monthOptions} className="bg-ink/40 px-5 py-4" />
+      <Select
+        variant="glass"
+        label="Difficulty"
+        value={grade}
+        onChange={setGrade}
+        options={gradeOptions}
+        className="col-span-2 bg-ink/40 px-5 py-4 md:col-span-1"
+      />
       <button
         type="submit"
         className="col-span-2 flex items-center justify-center gap-2 bg-saffron px-8 py-4 font-semibold text-ink transition hover:bg-saffron-2 md:col-span-1"

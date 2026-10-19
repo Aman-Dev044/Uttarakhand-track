@@ -1,28 +1,41 @@
+// Brand and contact settings come from NEXT_PUBLIC_* env vars (see .env.example).
+// Each variable must be read with a literal `process.env.NEXT_PUBLIC_…` so Next.js can inline it
+// into client components at build time; the fallbacks keep the site working without a .env file.
+const env = (value: string | undefined, fallback: string) => (value && value.trim() ? value.trim() : fallback);
+
+const name = env(process.env.NEXT_PUBLIC_SITE_NAME, "Trekking Compass");
+const locality = env(process.env.NEXT_PUBLIC_ADDRESS_LOCALITY, "Dehradun");
+const twitterHandle = env(process.env.NEXT_PUBLIC_TWITTER_HANDLE, "trekkingcompass").replace(/^@/, "");
+
 export const site = {
-  name: "Trekking Compass",
-  shortName: "Trekking Compass",
+  name,
+  shortName: name,
   tagline: "Trek into your own story",
   description:
     "Guided Himalayan treks, Char Dham Yatra and expeditions across Devbhoomi Uttarakhand, Himachal and Kashmir. Small groups, certified guides and 150+ curated trails from Dehradun.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://trekkingcompass.com",
+  url: env(process.env.NEXT_PUBLIC_SITE_URL, "https://trekkingcompass.com").replace(/\/$/, ""),
   locale: "en_IN",
-  phones: ["+91 70550 48487", "+91 70550 48488"],
-  email: "trekkingcompass@gmail.com",
+  phones: env(process.env.NEXT_PUBLIC_PHONES, "+91 70550 48487,+91 70550 48488")
+    .split(",")
+    .map((p) => p.trim())
+    .filter(Boolean),
+  email: env(process.env.NEXT_PUBLIC_EMAIL, "trekkingcompass@gmail.com"),
   address: {
-    locality: "Dehradun",
-    region: "Uttarakhand",
-    country: "IN",
+    locality,
+    region: env(process.env.NEXT_PUBLIC_ADDRESS_REGION, "Uttarakhand"),
+    country: env(process.env.NEXT_PUBLIC_ADDRESS_COUNTRY, "IN"),
   },
+  twitterHandle: `@${twitterHandle}`,
   socials: {
-    instagram: "https://www.instagram.com/trekkingcompass/",
-    facebook: "https://www.facebook.com/trekkingcompass/",
-    youtube: "https://www.youtube.com/@trekkingcompass",
-    linkedin: "https://www.linkedin.com/company/trekkingcompass",
-    x: "https://twitter.com/trekkingcompass",
+    instagram: env(process.env.NEXT_PUBLIC_INSTAGRAM_URL, "https://www.instagram.com/trekkingcompass/"),
+    facebook: env(process.env.NEXT_PUBLIC_FACEBOOK_URL, "https://www.facebook.com/trekkingcompass/"),
+    youtube: env(process.env.NEXT_PUBLIC_YOUTUBE_URL, "https://www.youtube.com/@trekkingcompass"),
+    linkedin: env(process.env.NEXT_PUBLIC_LINKEDIN_URL, "https://www.linkedin.com/company/trekkingcompass"),
+    x: env(process.env.NEXT_PUBLIC_X_URL, `https://twitter.com/${twitterHandle}`),
   },
-  officialTourism: "https://www.uttarakhandtourism.gov.in/",
-  foundedYear: 2018,
-} as const;
+  officialTourism: env(process.env.NEXT_PUBLIC_OFFICIAL_TOURISM_URL, "https://www.uttarakhandtourism.gov.in/"),
+  foundedYear: Number(env(process.env.NEXT_PUBLIC_FOUNDED_YEAR, "2018")),
+};
 
 export const navLinks = [
   { href: "#experiences", label: "Experiences" },

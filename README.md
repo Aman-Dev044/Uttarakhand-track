@@ -4,17 +4,20 @@ A single-page Next.js 16 landing page that combines Trekking Compass's trek cata
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000
-npm run build && npm start
+cp .env.example .env   # then edit the values
+npm run dev            # http://localhost:2026
+npm run build && npm start   # production, also on port 2026
 ```
 
-Set `NEXT_PUBLIC_SITE_URL` to the production domain so canonical URLs, the sitemap, Open Graph and JSON-LD all point to it (it defaults to `https://trekkingcompass.com`).
+Brand name, domain, phone numbers, email, address and social links live in `.env` (template: `.env.example`). They are `NEXT_PUBLIC_*` variables, so rebuild after changing them, and never store secrets in them. Without a `.env` file the site falls back to the defaults in `src/data/site.ts`.
+
+The port is set in the `dev` and `start` scripts in `package.json`. Next.js starts its server before it reads `.env`, so `PORT` cannot go there.
 
 ## Where things live
 
 | Path | What |
 | --- | --- |
-| `src/data/site.ts` | Brand name, contact details, socials, nav |
+| `.env` / `src/data/site.ts` | Brand name, domain, contact details, socials (env values with fallbacks), nav |
 | `src/data/content.ts` | Treks, prices, Char Dham, destinations, festivals, FAQs, testimonials |
 | `src/components/*` | One file per section (Hero, Treks, CharDham, …) |
 | `src/lib/jsonld.ts` | Structured data: TravelAgency, TouristTrip offers, FAQPage, TouristDestination |
