@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+@theme {
+  /* Devbhoomi Yatra palette: ivory paper, marigold, kumkum, temple maroon, brass and Ganga teal */
+  --color-ivory: #fbf5e9;
+  --color-sand: #f3e6cb;
+  --color-sandstone: #d8bd8c;
+  --color-marigold: #f6a723;
+  --color-saffron: #e46f1b;
+  --color-kumkum: #b4241c;
+  --color-maroon: #6b1527;
+  --color-maroon-deep: #3d0b16;
+  --color-night: #24060d;
+  --color-brass: #b4873a;
+  --color-brass-light: #e2bd72;
+  --color-ganga: #0e5a57;
+  --color-ganga-light: #3d9a90;
+  --color-umber: #2e1a10;
+  --color-clay: #7a5a45;
+
+  --font-display: var(--font-cormorant), "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-sans: var(--font-mukta), ui-sans-serif, system-ui, sans-serif;
+  --font-inscription: var(--font-marcellus), var(--font-cormorant), serif;
+  --font-deva: var(--font-yatra), var(--font-mukta), serif;
+
+  --animate-mandala: spin 90s linear infinite;
+  --animate-mandala-reverse: spin 120s linear infinite reverse;
+  --animate-sway: sway 4.5s ease-in-out infinite;
+  --animate-flicker: flicker 1.8s ease-in-out infinite;
+  --animate-rise: rise 9s linear infinite;
+  --animate-shimmer: shimmer 7s ease-in-out infinite;
+
+  @keyframes sway {
+    0%, 100% { transform: rotate(-6deg); }
+    50% { transform: rotate(6deg); }
+  }
+  @keyframes flicker {
+    0%, 100% { transform: scale(1, 1) translateY(0); opacity: 1; }
+    30% { transform: scale(0.92, 1.08) translateY(-1px); opacity: 0.9; }
+    60% { transform: scale(1.05, 0.95) translateY(0.5px); opacity: 1; }
+  }
+  @keyframes rise {
+    0% { transform: translate3d(0, 0, 0) scale(0.6); opacity: 0; }
+    12% { opacity: 1; }
+    100% { transform: translate3d(var(--drift, 20px), -70vh, 0) scale(1); opacity: 0; }
+  }
+  @keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+}
+
+:root {
+  color-scheme: light;
+  --background: var(--color-ivory);
+  --foreground: var(--color-umber);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-marigold);
+  color: var(--color-maroon-deep);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-saffron);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Handmade paper texture for the light sections */
+.paper {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.3 0 0 0 0 0.15 0 0 0 .09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Aipan-inspired lattice: lotus rosettes and dotted lines in rice-paste white, for maroon bands */
+.aipan {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120' fill='none' stroke='%23fbf5e9' stroke-opacity='.09' stroke-width='1.4'><circle cx='60' cy='60' r='16'/><circle cx='60' cy='60' r='6'/><path d='M60 44c6 6 6 10 0 16-6-6-6-10 0-16zM60 76c6-6 6-10 0-16-6 6-6 10 0 16zM44 60c6-6 10-6 16 0-6 6-10 6-16 0zM76 60c-6-6-10-6-16 0 6 6 10 6 16 0z'/><path d='M0 0l120 120M120 0L0 120' stroke-dasharray='2 6'/><circle cx='0' cy='0' r='10'/><circle cx='120' cy='0' r='10'/><circle cx='0' cy='120' r='10'/><circle cx='120' cy='120' r='10'/></svg>");
+  background-size: 120px 120px;
+}
+
+/* The same lattice drawn in kumkum on ivory */
+.aipan-light {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120' fill='none' stroke='%23b4241c' stroke-opacity='.07' stroke-width='1.3'><circle cx='60' cy='60' r='16'/><circle cx='60' cy='60' r='6'/><path d='M60 44c6 6 6 10 0 16-6-6-6-10 0-16zM60 76c6-6 6-10 0-16-6 6-6 10 0 16zM44 60c6-6 10-6 16 0-6 6-10 6-16 0zM76 60c-6-6-10-6-16 0 6 6 10 6 16 0z'/><path d='M0 0l120 120M120 0L0 120' stroke-dasharray='2 6'/><circle cx='0' cy='0' r='10'/><circle cx='120' cy='0' r='10'/><circle cx='0' cy='120' r='10'/><circle cx='120' cy='120' r='10'/></svg>");
+  background-size: 120px 120px;
+}
+
+/* Pahari miniature-style border strip: two rules with a running flower vine */
+.miniature-border {
+  height: 18px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='18' viewBox='0 0 36 18'><path d='M0 1.5h36M0 16.5h36' stroke='%23e2bd72' stroke-width='1.2'/><path d='M0 9c6-5 12-5 18 0s12 5 18 0' fill='none' stroke='%23e2bd72' stroke-width='1'/><circle cx='9' cy='5.6' r='1.8' fill='%23f6a723'/><circle cx='27' cy='12.4' r='1.8' fill='%23f6a723'/></svg>");
+  background-size: 36px 18px;
+  background-repeat: repeat-x;
+}
+
+.text-balance { text-wrap: balance; }
+.text-pretty { text-wrap: pretty; }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+/* Gold leaf headline accent */
+.gilded {
+  background-image: linear-gradient(100deg, var(--color-brass) 0%, var(--color-marigold) 35%, var(--color-brass-light) 55%, var(--color-saffron) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: var(--animate-shimmer);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  .ember { display: none; }
+}
