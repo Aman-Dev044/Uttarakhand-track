@@ -7,7 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: site.url,
       changeFrequency: "weekly",
       priority: 1,
-      images: [`${site.url}/images/hero.jpg`, `${site.url}/images/kedarnath.jpg`, `${site.url}/images/roopkund.jpg`],
+      images: [`${site.url}/images/hero.jpg`, `${site.url}/images/kedarnath.jpg`, `${site.url}/images/kedarkantha.jpg`, `${site.url}/images/valley-of-flowers.jpg`],
     },
   ];
 }

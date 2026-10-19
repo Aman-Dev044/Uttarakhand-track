@@ -1,238 +1,200 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, type ElementType, type ReactNode } from "react";
 import {
   animate,
   motion,
   useInView,
-  useMotionTemplate,
   useMotionValue,
   useReducedMotion,
   useSpring,
-  useTransform,
+  type HTMLMotionProps,
 } from "motion/react";
 import { site } from "@/data/site";
 
-export const ease = [0.2, 0.8, 0.2, 1] as const;
+export const ease = [0.22, 1, 0.36, 1] as const;
 
 export const inr = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 export const ft = (n: number) => `${n.toLocaleString("en-IN")} ft`;
 
-const GLYPHS = "▲△◆◇01#/<>+=*%";
+/** Dispatched by "Plan this trek" buttons; the callback form listens and pre-fills itself */
+export const PICK_TREK_EVENT = "tc:pick-trek";
+export function pickTrek(name: string) {
+  window.dispatchEvent(new CustomEvent(PICK_TREK_EVENT, { detail: name }));
+  scrollToId("plan");
+}
 
-/**
- * Decodes text from random glyphs when it scrolls into view. The final text is what the
- * server renders, so crawlers and screen readers always get the real string. Use it on
- * monospace labels so the width never changes.
- */
-export function Scramble({ text, className }: { text: string; className?: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-10% 0px" });
-  const reduce = useReducedMotion();
+/** Smooth-scrolls through Lenis when it is running, natively otherwise */
+export function scrollToId(id: string) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (window.__lenis) window.__lenis.scrollTo(el, { offset: -64 });
+  else el.scrollIntoView({ behavior: "smooth" });
+}
 
-  useEffect(() => {
-    // Mutate React's own text node so reconciliation never sees a foreign node
-    const el = ref.current?.firstChild;
-    if (!inView || reduce || !el) return;
-    let frame = 0;
-    const start = performance.now();
-    const duration = 700 + text.length * 18;
-    const tick = (now: number) => {
-      const p = Math.min(1, (now - start) / duration);
-      const revealed = Math.floor(p * text.length);
-      el.nodeValue = text
-        .split("")
-        .map((c, i) => (i < revealed || c === " " ? c : GLYPHS[(i + Math.floor(now / 50)) % GLYPHS.length]))
-        .join("");
-      if (p < 1) frame = requestAnimationFrame(tick);
-    };
-    frame = requestAnimationFrame(tick);
-    return () => {
-      cancelAnimationFrame(frame);
-      el.nodeValue = text;
-    };
-  }, [inView, reduce, text]);
-
+export function Logo({ light = false }: { light?: boolean }) {
   return (
-    <span ref={ref} className={className}>
-      {text}
+    <span className="inline-flex items-center gap-2.5">
+      <svg viewBox="0 0 32 32" className="size-7" aria-hidden="true">
+        <path d="M2 27 13 8l5 8.5 3.5-5L30 27Z" fill={light ? "#f7f9fb" : "#0f1720"} />
+        <path d="m13 8 4 6.8-4-1.8-3.2 2.4Z" fill="#6f9fc4" />
+        <circle cx="25.5" cy="6.5" r="2.5" fill="#e0482f" />
+      </svg>
+      <span className={`whitespace-nowrap font-display text-[17px] font-semibold tracking-[-0.02em] ${light ? "text-snow" : "text-slate"}`}>
+        {site.name}
+      </span>
     </span>
   );
 }
 
-export function Eyebrow({ code, children }: { code: string; children: string }) {
-  return (
-    <p className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.25em] text-glacier">
-      <span className="rounded border border-glacier/30 px-1.5 py-0.5 text-[10px] text-glacier/80">{code}</span>
-      <Scramble text={children} />
-    </p>
-  );
-}
-
-export function SectionHeading({
-  code,
-  eyebrow,
-  title,
+/** Small numbered section label: (03) Seasons */
+export function Label({
+  n,
+  children,
+  light = false,
+  as: Tag = "p",
   id,
-  intro,
-  className = "",
 }: {
-  code: string;
-  eyebrow: string;
-  title: ReactNode;
-  id: string;
-  intro?: ReactNode;
-  className?: string;
+  n: string;
+  children: ReactNode;
+  light?: boolean;
+  as?: ElementType;
+  id?: string;
 }) {
   return (
-    <div className={`max-w-3xl ${className}`}>
-      <Eyebrow code={code}>{eyebrow}</Eyebrow>
-      <motion.h2
-        id={id}
-        initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
-        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        viewport={{ once: true, margin: "-10% 0px" }}
-        transition={{ duration: 0.9, ease }}
-        className="mt-5 font-display text-3xl font-semibold leading-[1.05] tracking-tight text-balance sm:text-5xl"
-      >
-        {title}
-      </motion.h2>
-      {intro && (
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-10% 0px" }}
-          transition={{ duration: 0.8, delay: 0.1, ease }}
-          className="mt-5 max-w-2xl text-base leading-relaxed text-mist text-pretty sm:text-lg"
-        >
-          {intro}
-        </motion.p>
-      )}
+    <div className={`flex items-center gap-3 font-sans text-[13px] font-medium tracking-[-0.01em] ${light ? "text-snow/70" : "text-stone"}`}>
+      <span aria-hidden="true" className="tabular-nums text-alpine">
+        ({n})
+      </span>
+      <span className={`h-px w-8 ${light ? "bg-snow/30" : "bg-frost"}`} aria-hidden="true" />
+      <Tag id={id}>
+        {children}
+      </Tag>
     </div>
   );
 }
 
-/** Mono number that counts up once when visible */
-export function Ticker({ value, suffix = "", className }: { value: number; suffix?: string; className?: string }) {
+/**
+ * Heading whose lines slide up out of overflow-hidden masks.
+ * Lines are passed explicitly so the reveal never depends on measuring text.
+ */
+export function LineReveal({
+  lines,
+  as: Tag = "h2",
+  className,
+  id,
+  delay = 0,
+}: {
+  lines: ReactNode[];
+  as?: ElementType;
+  className?: string;
+  id?: string;
+  delay?: number;
+}) {
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: "0px 0px -12% 0px" });
+  return (
+    <Tag ref={ref} id={id} className={className}>
+      {lines.map((line, i) => (
+        <span key={i} className="block overflow-hidden pb-[0.08em] -mb-[0.08em]">
+          <motion.span
+            className="block"
+            initial={{ y: "105%" }}
+            animate={inView ? { y: "0%" } : undefined}
+            transition={{ duration: 1, ease, delay: delay + i * 0.09 }}
+          >
+            {line}
+          </motion.span>
+          {i < lines.length - 1 && " "}
+        </span>
+      ))}
+    </Tag>
+  );
+}
+
+export function FadeUp({ children, delay = 0, className, ...rest }: HTMLMotionProps<"div"> & { delay?: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+      transition={{ duration: 0.9, ease, delay }}
+      className={className}
+      {...rest}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export function Counter({ value, suffix = "", grouping = true }: { value: number; suffix?: string; grouping?: boolean }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-10% 0px" });
+  // Starts just before it scrolls in, so the SSR value never visibly jumps back
+  const inView = useInView(ref, { once: true, margin: "0px 0px 10% 0px" });
   const reduce = useReducedMotion();
+  const format = (n: number) => (grouping ? Math.round(n).toLocaleString("en-IN") : String(Math.round(n)));
 
   useEffect(() => {
-    const el = ref.current?.firstChild;
-    if (!inView || reduce || !el) return;
-    const controls = animate(0, value, {
-      duration: 1.8,
-      ease: [0.16, 1, 0.3, 1],
-      onUpdate: (v) => (el.nodeValue = Math.round(v).toLocaleString("en-IN")),
+    const el = ref.current;
+    if (!el || !inView) return;
+    if (reduce) {
+      el.textContent = format(value);
+      return;
+    }
+    const controls = animate(value * 0.6, value, {
+      duration: 1.6,
+      ease,
+      onUpdate: (v) => (el.textContent = format(v)),
     });
     return () => controls.stop();
-  }, [inView, reduce, value]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inView, value, reduce]);
 
   return (
-    <span className={`font-mono tabular-nums ${className ?? ""}`}>
-      <span ref={ref}>{value.toLocaleString("en-IN")}</span>
-      {suffix && <span className="text-[0.55em] text-mist">{suffix}</span>}
+    <span className="tabular-nums">
+      <span ref={ref}>{format(value)}</span>
+      {suffix}
     </span>
   );
 }
 
-/** Pulls its child toward the pointer. Inert on touch and with reduced motion. */
+/** Pulls its child gently toward the cursor */
 export function Magnetic({ children, strength = 0.3, className }: { children: ReactNode; strength?: number; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLSpanElement>(null);
   const reduce = useReducedMotion();
-  const x = useSpring(0, { stiffness: 220, damping: 18, mass: 0.4 });
-  const y = useSpring(0, { stiffness: 220, damping: 18, mass: 0.4 });
+  const x = useSpring(useMotionValue(0), { stiffness: 220, damping: 18, mass: 0.4 });
+  const y = useSpring(useMotionValue(0), { stiffness: 220, damping: 18, mass: 0.4 });
 
   function move(e: React.PointerEvent) {
     if (reduce || e.pointerType !== "mouse" || !ref.current) return;
     const r = ref.current.getBoundingClientRect();
-    x.set((e.clientX - (r.left + r.width / 2)) * strength);
-    y.set((e.clientY - (r.top + r.height / 2)) * strength);
+    x.set((e.clientX - r.left - r.width / 2) * strength);
+    y.set((e.clientY - r.top - r.height / 2) * strength);
+  }
+  function leave() {
+    x.set(0);
+    y.set(0);
   }
 
   return (
-    <motion.div
-      ref={ref}
-      style={{ x, y }}
-      onPointerMove={move}
-      onPointerLeave={() => {
-        x.set(0);
-        y.set(0);
-      }}
-      className={`inline-block ${className ?? ""}`}
-    >
+    <motion.span ref={ref} onPointerMove={move} onPointerLeave={leave} style={{ x, y }} className={`inline-block ${className ?? ""}`}>
       {children}
-    </motion.div>
+    </motion.span>
   );
 }
 
-/** 3D tilt with a cursor-following spotlight */
-export function TiltCard({ children, className, max = 8 }: { children: ReactNode; className?: string; max?: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
-  const px = useMotionValue(0.5);
-  const py = useMotionValue(0.5);
-  const rx = useSpring(useTransform(py, [0, 1], [max, -max]), { stiffness: 160, damping: 18 });
-  const ry = useSpring(useTransform(px, [0, 1], [-max, max]), { stiffness: 160, damping: 18 });
-  const mx = useTransform(px, (v) => `${v * 100}%`);
-  const my = useTransform(py, (v) => `${v * 100}%`);
-  const light = useMotionTemplate`radial-gradient(380px circle at ${mx} ${my}, rgb(127 227 255 / 0.18), transparent 45%)`;
-
-  function move(e: React.PointerEvent) {
-    if (e.pointerType !== "mouse" || !ref.current) return;
-    const r = ref.current.getBoundingClientRect();
-    px.set((e.clientX - r.left) / r.width);
-    py.set((e.clientY - r.top) / r.height);
-  }
-
+export function Arrow({ className = "size-4" }: { className?: string }) {
   return (
-    <motion.div
-      ref={ref}
-      onPointerMove={move}
-      onPointerLeave={() => {
-        px.set(0.5);
-        py.set(0.5);
-      }}
-      style={reduce ? undefined : { rotateX: rx, rotateY: ry, transformPerspective: 900 }}
-      className={`group relative ${className ?? ""}`}
-    >
-      {children}
-      <motion.div
-        aria-hidden="true"
-        style={{ background: light }}
-        className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-      />
-    </motion.div>
-  );
-}
-
-export function PeakGlyph({ className = "size-8" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 64 64" className={className} aria-hidden="true">
-      <defs>
-        <linearGradient id="peak-g" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#7fe3ff" />
-          <stop offset="1" stopColor="#8b6cff" />
-        </linearGradient>
-      </defs>
-      <path d="M6 54 26 20l8 13 6-9 18 30Z" fill="url(#peak-g)" />
-      <path d="m26 20 6 10-6-3-5 4Z" fill="#e9f3ff" />
-      <path d="m48 6 1.6 4.4L54 12l-4.4 1.6L48 18l-1.6-4.4L42 12l4.4-1.6Z" fill="#c8ff3a" />
+    <svg viewBox="0 0 16 16" fill="none" className={className} aria-hidden="true">
+      <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
 
-export function Logo() {
+export function ArrowUpRight({ className = "size-4" }: { className?: string }) {
   return (
-    <span className="flex items-center gap-2.5">
-      <PeakGlyph className="size-8" />
-      <span className="leading-none">
-        <span className="block font-display text-xs font-semibold uppercase tracking-[0.1em] sm:text-sm sm:tracking-[0.12em]">{site.name}</span>
-        <span className="mt-1 block font-mono text-[10px] uppercase tracking-[0.2em] text-mist">
-          {site.address.locality} · est. {site.foundedYear}
-        </span>
-      </span>
-    </span>
+    <svg viewBox="0 0 16 16" fill="none" className={className} aria-hidden="true">
+      <path d="M5 11 11 5M6 5h5v5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   );
 }

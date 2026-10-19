@@ -1,129 +1,113 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
-import { motion, useScroll, useSpring } from "motion/react";
-import { MapPin } from "lucide-react";
+import { motion } from "motion/react";
 import { dhams } from "@/data/content";
 import { site } from "@/data/site";
-import { SectionHeading, Ticker, ease } from "./ui";
+import { ArrowUpRight, ease, FadeUp, Label, LineReveal } from "./ui";
 
-const summary = [
-  { value: 1250, suffix: " km", label: "Road loop from Haridwar, approx." },
-  { value: 22, suffix: " km", label: "On foot (Yamunotri + Kedarnath)" },
-  { value: 10, suffix: "–12 days", label: "Comfortable pace" },
-] as const;
+const toFt = (m: number) => Math.round(m * 3.281).toLocaleString("en-IN");
 
 export function CharDham() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 70%", "end 60%"] });
-  const draw = useSpring(scrollYProgress, { stiffness: 90, damping: 25 });
-
   return (
-    <section id="char-dham" aria-labelledby="dham-title" className="relative overflow-hidden bg-night-2/50 py-20 sm:py-28">
-      <div className="hud-grid absolute inset-0 opacity-60" aria-hidden="true" />
-      <div className="relative mx-auto max-w-6xl px-5 sm:px-8">
-        <SectionHeading
-          code="06"
-          eyebrow="Char Dham route"
-          id="dham-title"
-          title={
-            <>
-              Four shrines, <span className="text-aurora">one west-to-east loop.</span>
-            </>
-          }
-          intro="The yatra is traditionally done clockwise: Yamunotri, Gangotri, Kedarnath, then Badrinath. Shrines usually open around Akshaya Tritiya in late April or May and close near Diwali."
-        />
-
-        <dl className="mt-10 grid gap-3 sm:grid-cols-3">
-          {summary.map((s) => (
-            <div key={s.label} className="glass rounded-2xl px-5 py-4">
-              <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-mist">{s.label}</dt>
-              <dd className="mt-1 whitespace-nowrap text-2xl text-ice">
-                <Ticker value={s.value} suffix={s.suffix} />
-              </dd>
-            </div>
-          ))}
-        </dl>
-
-        <div ref={ref} className="relative mt-16">
-          {/* route line */}
-          <div aria-hidden="true" className="absolute bottom-0 left-[15px] top-0 w-px bg-ice/10 md:left-1/2">
-            <motion.div style={{ scaleY: draw }} className="absolute inset-0 origin-top bg-gradient-to-b from-teal via-glacier to-violet" />
+    <section id="char-dham" aria-labelledby="dham-title" className="bg-snow px-5 py-24 sm:px-10 sm:py-36">
+      <div className="mx-auto max-w-[1600px]">
+        <div className="grid gap-8 lg:grid-cols-2 lg:items-end">
+          <div>
+            <Label n="05">Char Dham Yatra</Label>
+            <LineReveal
+              id="dham-title"
+              lines={["Four temples,", "west to east."]}
+              className="mt-8 font-display text-[2.6rem] font-semibold leading-[0.95] tracking-[-0.05em] sm:text-7xl xl:text-[5.6rem]"
+            />
           </div>
-          <ol className="relative space-y-14 md:space-y-20">
+          <FadeUp>
+            <p className="max-w-md text-[17px] leading-relaxed text-slate-2 lg:ml-auto">
+              The pilgrimage is traditionally made clockwise, from the source of the Yamuna to the temple of Badrinath. We
+              plan the roads, the walks and the rest days between them.
+            </p>
+          </FadeUp>
+        </div>
 
-          <li className="relative pl-12 md:pl-0 md:text-center">
-            <span aria-hidden="true" className="absolute left-[9px] top-1 size-3 rounded-full border-2 border-teal bg-night md:left-1/2 md:-translate-x-1/2" />
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-teal md:pt-6">Start · Haridwar / Rishikesh</p>
-          </li>
-
-          {dhams.map((d, i) => {
-            const right = i % 2 === 1;
-            return (
-              <li key={d.name} className="relative grid gap-6 pl-12 md:grid-cols-2 md:gap-16 md:pl-0">
-                <span aria-hidden="true" className="absolute left-[7px] top-2 grid size-4 place-items-center md:left-1/2 md:-translate-x-1/2">
-                  <span className="absolute size-4 animate-pulse-ring rounded-full bg-glacier/50" />
-                  <span className="size-3 rounded-full bg-glacier" />
-                </span>
-                <motion.div
-                  initial={{ opacity: 0, x: right ? 40 : -40 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-15% 0px" }}
-                  transition={{ duration: 0.8, ease }}
-                  className={right ? "md:order-2" : "md:text-right"}
-                >
-                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-mist">
-                    Dham 0{i + 1} · {d.leg}
+        <div className="relative mt-16 lg:mt-24">
+          {/* The route line draws itself across (desktop) or down (mobile) */}
+          <motion.span
+            aria-hidden="true"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true, margin: "0px 0px -20% 0px" }}
+            transition={{ duration: 1.8, ease }}
+            className="absolute left-0 right-0 top-[7px] hidden h-px origin-left bg-slate lg:block"
+          />
+          <motion.span
+            aria-hidden="true"
+            initial={{ scaleY: 0 }}
+            whileInView={{ scaleY: 1 }}
+            viewport={{ once: true, margin: "0px 0px -20% 0px" }}
+            transition={{ duration: 2.2, ease }}
+            className="absolute bottom-0 left-[7px] top-0 w-px origin-top bg-frost lg:hidden"
+          />
+          <ol className="grid gap-14 lg:grid-cols-4 lg:gap-8">
+            {dhams.map((d, i) => (
+              <li key={d.name} className="relative pl-10 lg:pl-0 lg:pt-12">
+                <motion.span
+                  aria-hidden="true"
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true, margin: "0px 0px -20% 0px" }}
+                  transition={{ duration: 0.6, ease, delay: 0.3 + i * 0.25 }}
+                  className="absolute left-0 top-0 size-[15px] rounded-full border-[3px] border-snow bg-alpine shadow-[0_0_0_1px_var(--color-alpine)]"
+                />
+                <FadeUp delay={i * 0.1}>
+                  <p className="text-[13px] tabular-nums text-stone">
+                    0{i + 1} · {d.district}
                   </p>
-                  <h3 className="mt-3 font-display text-3xl font-semibold sm:text-4xl">{d.name}</h3>
-                  <p className="mt-1 text-sm text-glacier">
-                    {d.deity} · {d.district}
-                  </p>
-                  <p className={`mt-4 max-w-md text-sm leading-relaxed text-ice/80 ${right ? "" : "md:ml-auto"}`}>{d.copy}</p>
-                  <dl className={`mt-5 flex flex-wrap gap-2 font-mono text-[11px] ${right ? "" : "md:justify-end"}`}>
-                    <div className="rounded-full border border-ice/15 px-3 py-1">
-                      <dt className="sr-only">Altitude</dt>
-                      <dd>
-                        {d.altitudeM.toLocaleString("en-IN")} m · {Math.round(d.altitudeM * 3.281).toLocaleString("en-IN")} ft
-                      </dd>
-                    </div>
-                    <div className="inline-flex items-center gap-1.5 rounded-full border border-ice/15 px-3 py-1">
-                      <dt className="sr-only">Access</dt>
-                      <MapPin className="size-3 text-volt" aria-hidden="true" />
-                      <dd>{d.access}</dd>
-                    </div>
-                  </dl>
-                </motion.div>
+                  <h3 className="mt-2 font-display text-4xl font-semibold tracking-[-0.045em] text-slate">{d.name}</h3>
+                  <p className="mt-1 text-[15px] text-glacier-deep">{d.deity}</p>
+                </FadeUp>
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.92, clipPath: "inset(12% round 24px)" }}
-                  whileInView={{ opacity: 1, scale: 1, clipPath: "inset(0% round 24px)" }}
-                  viewport={{ once: true, margin: "-15% 0px" }}
-                  transition={{ duration: 1, ease }}
-                  className={`relative aspect-[16/10] overflow-hidden rounded-3xl ${right ? "md:order-1" : ""}`}
+                  initial={{ clipPath: "inset(100% 0 0 0 round 20px)" }}
+                  whileInView={{ clipPath: "inset(0% 0 0 0 round 20px)" }}
+                  viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+                  transition={{ duration: 1.2, ease, delay: 0.1 + i * 0.12 }}
+                  className="relative mt-6 aspect-[4/5] overflow-hidden rounded-[20px] bg-ice"
                 >
-                  <Image src={d.image} alt={`${d.name} temple, ${d.district} district, Uttarakhand`} fill sizes="(min-width: 768px) 45vw, 90vw" className="object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-night/40 to-transparent" />
+                  <Image src={d.image} alt={`${d.name} temple, ${d.district} district`} fill sizes="(min-width: 1024px) 24vw, 90vw" className="object-cover transition-transform duration-[1.2s] ease-[var(--ease-glide)] hover:scale-105" />
                 </motion.div>
+                <dl className="mt-5 space-y-2 text-[14px]">
+                  <div className="flex justify-between gap-4 border-b border-frost pb-2">
+                    <dt className="text-stone">Altitude</dt>
+                    <dd className="font-medium tabular-nums text-slate">
+                      {d.altitudeM.toLocaleString("en-IN")} m · {toFt(d.altitudeM)} ft
+                    </dd>
+                  </div>
+                  <div className="flex justify-between gap-4 border-b border-frost pb-2">
+                    <dt className="text-stone">Access</dt>
+                    <dd className="text-right font-medium text-slate">{d.access}</dd>
+                  </div>
+                </dl>
+                <p className="mt-4 text-[15px] leading-relaxed text-slate-2">{d.copy}</p>
               </li>
-            );
-          })}
-
-          <li className="relative pl-12 md:pl-0 md:text-center">
-            <span aria-hidden="true" className="absolute left-[9px] top-1 size-3 rounded-full border-2 border-violet bg-night md:left-1/2 md:-translate-x-1/2" />
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-violet md:pt-6">Return · Badrinath → Haridwar · ~320 km</p>
-          </li>
+            ))}
           </ol>
         </div>
 
-        <p className="glass mt-16 rounded-2xl p-5 text-sm leading-relaxed text-mist sm:p-6">
-          Every pilgrim has to register with the state before the yatra; we handle it as part of the package, along with
-          Kedarnath helicopter bookings where available. For official notices and opening dates, see{" "}
-          <a href={site.officialTourism} target="_blank" rel="noopener noreferrer" className="text-glacier underline decoration-glacier/40 underline-offset-4 hover:decoration-glacier">
-            Uttarakhand Tourism
+        <FadeUp className="mt-20 grid gap-6 rounded-[28px] bg-ice p-6 sm:p-10 lg:grid-cols-[1fr_auto] lg:items-center">
+          <p className="max-w-3xl text-[16px] leading-relaxed text-slate-2">
+            <strong className="font-semibold text-slate">Good to know:</strong> the temples usually open in late April or May
+            and close in October or November; the temple committees announce exact dates each year. Every pilgrim must register
+            with the state government before travelling. Avoid July and August, when landslides are most frequent.
+          </p>
+          <a
+            href={site.officialTourism}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex w-fit items-center gap-2 rounded-full bg-white px-5 py-3 text-[14px] font-medium text-slate ring-1 ring-slate/10 transition hover:ring-slate/30"
+          >
+            Official Uttarakhand Tourism site
+            <ArrowUpRight className="size-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </a>
-          .
-        </p>
+        </FadeUp>
       </div>
     </section>
   );

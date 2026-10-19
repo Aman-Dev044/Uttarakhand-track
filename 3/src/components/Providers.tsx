@@ -4,10 +4,17 @@ import { useEffect, type ReactNode } from "react";
 import Lenis from "lenis";
 import { MotionConfig } from "motion/react";
 
+declare global {
+  interface Window {
+    __lenis?: Lenis;
+  }
+}
+
 export function Providers({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const lenis = new Lenis({ lerp: 0.09, anchors: { offset: -72 } });
+    const lenis = new Lenis({ lerp: 0.09, anchors: { offset: -64 } });
+    window.__lenis = lenis;
     let frame = requestAnimationFrame(function raf(time) {
       lenis.raf(time);
       frame = requestAnimationFrame(raf);
@@ -15,6 +22,7 @@ export function Providers({ children }: { children: ReactNode }) {
     return () => {
       cancelAnimationFrame(frame);
       lenis.destroy();
+      window.__lenis = undefined;
     };
   }, []);
 

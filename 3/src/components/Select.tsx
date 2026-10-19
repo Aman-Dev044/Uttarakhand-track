@@ -12,12 +12,12 @@ type Props = {
   value: string;
   onChange: (value: string) => void;
   options: SelectOption[];
-  /** Accessible name, rendered visibly when `variant="hud"` */
+  /** Accessible name. Visually hidden; the surrounding sentence or placeholder carries it on screen */
   label: string;
   placeholder?: string;
   /** Adds a hidden input so the value is submitted with the surrounding form */
   name?: string;
-  variant?: "hud" | "field";
+  variant?: "inline" | "field";
   className?: string;
 };
 
@@ -52,8 +52,10 @@ export function Select({ value, onChange, options, label, placeholder, name, var
     const below = window.innerHeight - r.bottom - GAP * 2;
     const above = r.top - GAP * 2;
     const flip = below < Math.min(MAX_HEIGHT, 200) && above > below;
+    // Keep the popup inside the viewport when the trigger sits near the right edge
+    const width = Math.max(r.width, 200);
     setPos({
-      left: r.left,
+      left: Math.max(GAP, Math.min(r.left, window.innerWidth - width - GAP)),
       width: r.width,
       ...(flip ? { bottom: window.innerHeight - r.top + GAP } : { top: r.bottom + GAP }),
       maxHeight: Math.min(MAX_HEIGHT, flip ? above : below),
@@ -159,21 +161,13 @@ export function Select({ value, onChange, options, label, placeholder, name, var
 
   const listId = `${id}-list`;
   const labelId = `${id}-label`;
-  const hud = variant === "hud";
+  const inline = variant === "inline";
 
   return (
-    <div
-      className={className}
-    >
-      {hud ? (
-        <span id={labelId} className="mb-2 block font-mono text-[10px] uppercase tracking-[0.2em] text-mist">
-          {label}
-        </span>
-      ) : (
-        <span id={labelId} className="sr-only">
-          {label}
-        </span>
-      )}
+    <span className={`${inline ? "inline-block align-baseline" : "block"} ${className ?? ""}`}>
+      <span id={labelId} className="sr-only">
+        {label}
+      </span>
       {name && <input type="hidden" name={name} value={value} />}
       <button
         ref={buttonRef}
@@ -185,13 +179,21 @@ export function Select({ value, onChange, options, label, placeholder, name, var
         aria-labelledby={`${labelId} ${id}-button`}
         onClick={() => (open ? close() : openList())}
         onKeyDown={onButtonKey}
-        className={`group flex w-full items-center justify-between gap-2 border text-left outline-none transition focus-visible:outline-none ${
-          hud ? "rounded-xl px-4 py-3.5 font-mono text-sm" : "rounded-xl px-4 py-3.5 text-sm"
-        } ${open ? "border-glacier bg-glacier/10 shadow-[0_0_0_4px_rgb(127_227_255/0.12)]" : "border-ice/15 bg-ice/[0.04] hover:border-ice/30 focus-visible:border-volt"}`}
+        className={
+          inline
+            ? `group inline-flex items-baseline gap-1.5 border-b-2 pb-0.5 text-left outline-none transition-colors ${
+                open ? "border-alpine text-alpine" : "border-slate/25 text-slate hover:border-alpine focus-visible:border-alpine"
+              }`
+            : `group flex w-full items-center justify-between gap-2 rounded-xl border bg-white px-4 py-3.5 text-left outline-none transition ${
+                open ? "border-slate shadow-[0_0_0_4px_rgba(15,23,32,0.06)]" : "border-frost hover:border-stone/60 focus-visible:border-slate"
+              }`
+        }
       >
-        <span className={`truncate ${selected ? "text-ice" : "text-ice/45"}`}>{selected?.label ?? placeholder}</span>
+        <span className={inline ? "whitespace-nowrap" : `truncate ${selected ? "text-slate" : "text-stone/70"}`}>
+          {selected?.label ?? placeholder}
+        </span>
         <ChevronDown
-          className={`size-4 shrink-0 text-mist transition duration-300 group-hover:text-glacier ${open ? "rotate-180 text-glacier" : ""}`}
+          className={`shrink-0 transition duration-300 ${inline ? "size-[0.55em] self-center text-current" : "size-4 text-stone group-hover:text-slate"} ${open ? "rotate-180" : ""}`}
           aria-hidden="true"
         />
       </button>
@@ -222,7 +224,7 @@ export function Select({ value, onChange, options, label, placeholder, name, var
                   maxHeight: pos.maxHeight,
                   transformOrigin: pos.top !== undefined ? "top" : "bottom",
                 }}
-                className="no-scrollbar z-[80] overflow-y-auto rounded-xl bg-night-2/95 p-1.5 font-sans text-sm text-ice shadow-2xl shadow-black/60 ring-1 ring-glacier/25 outline-none backdrop-blur-xl"
+                className="no-scrollbar z-[80] overflow-y-auto rounded-2xl bg-white p-1.5 font-sans text-[15px] text-slate shadow-[0_24px_60px_-20px_rgba(15,23,32,0.35),0_2px_6px_rgba(15,23,32,0.06)] ring-1 ring-slate/8 outline-none"
               >
                 {options.map((o, i) => {
                   const isSelected = o.value === value;
@@ -236,12 +238,12 @@ export function Select({ value, onChange, options, label, placeholder, name, var
                       aria-selected={isSelected}
                       onPointerMove={() => setActive(i)}
                       onClick={() => choose(i)}
-                      className={`flex cursor-pointer items-center justify-between gap-3 rounded-lg px-3.5 py-2.5 transition-colors ${
-                        isActive ? "bg-glacier/10" : ""
-                      } ${isSelected ? "font-semibold text-volt" : "text-ice/85"}`}
+                      className={`flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3.5 py-2.5 transition-colors ${
+                        isActive ? "bg-ice" : ""
+                      } ${isSelected ? "font-semibold text-slate" : "text-slate-2"}`}
                     >
                       {o.label}
-                      {isSelected && <Check className="size-4 shrink-0" aria-hidden="true" />}
+                      {isSelected && <Check className="size-4 shrink-0 text-alpine" aria-hidden="true" />}
                     </li>
                   );
                 })}
@@ -250,6 +252,6 @@ export function Select({ value, onChange, options, label, placeholder, name, var
           </AnimatePresence>,
           document.body,
         )}
-    </div>
+    </span>
   );
 }

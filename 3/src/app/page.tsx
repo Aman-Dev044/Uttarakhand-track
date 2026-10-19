@@ -1,14 +1,15 @@
+import { Intro } from "@/components/Intro";
 import { Navbar } from "@/components/Navbar";
-import { AltitudeGauge } from "@/components/AltitudeGauge";
 import { Hero } from "@/components/Hero";
-import { Finder } from "@/components/Finder";
-import { Compare } from "@/components/Compare";
-import { AltitudeChart } from "@/components/AltitudeChart";
-import { Featured } from "@/components/Featured";
-import { Adventures } from "@/components/Adventures";
+import { Manifesto } from "@/components/Manifesto";
+import { Signature } from "@/components/Signature";
+import { Marquee } from "@/components/Marquee";
+import { TrekIndex } from "@/components/TrekIndex";
+import { Seasons } from "@/components/Seasons";
 import { CharDham } from "@/components/CharDham";
-import { Destinations } from "@/components/Destinations";
-import { Safety } from "@/components/Safety";
+import { Panorama } from "@/components/Panorama";
+import { Adventures } from "@/components/Adventures";
+import { Why } from "@/components/Why";
 import { Reviews } from "@/components/Reviews";
 import { Faq } from "@/components/Faq";
 import { Plan } from "@/components/Plan";
@@ -19,18 +20,19 @@ export default function Home() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(buildJsonLd()) }} />
+      <Intro />
       <Navbar />
-      <AltitudeGauge />
       <main id="main">
         <Hero />
-        <Finder />
-        <Compare />
-        <AltitudeChart />
-        <Featured />
-        <Adventures />
+        <Manifesto />
+        <Signature />
+        <Marquee />
+        <TrekIndex />
+        <Seasons />
         <CharDham />
-        <Destinations />
-        <Safety />
+        <Panorama />
+        <Adventures />
+        <Why />
         <Reviews />
         <Faq />
         <Plan />

@@ -16,23 +16,23 @@ type Credit = { title: string; author: string; license: string; source: string }
 export default function CreditsPage() {
   const rows = Object.entries(credits as Record<string, Credit>);
   return (
-    <main id="main" className="min-h-screen bg-night px-5 py-16 text-ice sm:px-8">
+    <main id="main" className="min-h-screen bg-snow px-5 py-16 text-slate sm:px-10">
       <div className="mx-auto max-w-4xl">
         <Link href="/" aria-label="Back to home">
           <Logo />
         </Link>
-        <h1 className="mt-14 font-display text-4xl font-semibold sm:text-5xl">Photo credits</h1>
-        <p className="mt-4 max-w-2xl text-mist">
+        <h1 className="mt-14 font-display text-5xl font-semibold tracking-[-0.05em] sm:text-7xl">Photo credits</h1>
+        <p className="mt-4 max-w-2xl text-slate-2">
           Photographs are sourced from Wikimedia Commons and used under their respective licences. Images have been
           resized and cropped for the web.
         </p>
-        <ul className="mt-12 divide-y divide-ice/10 border-y border-ice/10">
+        <ul className="mt-12 divide-y divide-frost border-y border-frost">
           {rows.map(([slug, c]) => (
             <li key={slug} className="grid gap-1 py-4 sm:grid-cols-[1fr_auto] sm:gap-6">
-              <a href={c.source} target="_blank" rel="noopener noreferrer" className="font-medium hover:text-glacier">
+              <a href={c.source} target="_blank" rel="noopener noreferrer" className="font-medium hover:text-alpine">
                 {c.title}
               </a>
-              <span className="text-sm font-mono text-mist">
+              <span className="text-sm text-stone">
                 {c.author} · {c.license}
               </span>
             </li>

@@ -1,56 +1,81 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "motion/react";
-import { Plus } from "lucide-react";
 import { faqs } from "@/data/content";
-import { SectionHeading, ease } from "./ui";
+import { site, telHref } from "@/data/site";
+import { FadeUp, Label, LineReveal } from "./ui";
 
 export function Faq() {
-  const [open, setOpen] = useState(0);
+  const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" aria-labelledby="faq-title" className="relative py-20 sm:py-28">
-      <div className="mx-auto grid max-w-6xl gap-12 px-5 sm:px-8 lg:grid-cols-[22rem_1fr]">
-        <SectionHeading
-          code="10"
-          eyebrow="FAQs"
-          id="faq-title"
-          title="Questions before you pack."
-          intro="Still unsure? The callback form below reaches a trek expert in Dehradun."
-          className="lg:sticky lg:top-28 lg:self-start"
-        />
-        <ul className="space-y-3">
+    <section id="faq" aria-labelledby="faq-title" className="bg-snow px-5 pb-24 sm:px-10 sm:pb-36">
+      <div className="mx-auto grid max-w-[1600px] gap-14 border-t border-frost pt-24 sm:pt-36 lg:grid-cols-[1fr_1.4fr] lg:gap-24">
+        <div className="lg:sticky lg:top-28 lg:self-start">
+          <Label n="10">Questions</Label>
+          <LineReveal
+            id="faq-title"
+            lines={["Asked before", "almost every trek."]}
+            className="mt-8 font-display text-[2.6rem] font-semibold leading-[0.95] tracking-[-0.05em] sm:text-6xl"
+          />
+          <FadeUp>
+            <p className="mt-8 max-w-sm text-[17px] leading-relaxed text-slate-2">
+              Something else on your mind? Call{" "}
+              <a
+                href={telHref(site.phones[0])}
+                className="whitespace-nowrap font-medium text-slate underline decoration-frost decoration-2 underline-offset-4 hover:decoration-alpine"
+              >
+                {site.phones[0]}
+              </a>{" "}
+              and talk to a trek leader, not a call centre.
+            </p>
+          </FadeUp>
+        </div>
+
+        <ul className="border-t border-slate">
           {faqs.map((f, i) => {
             const isOpen = open === i;
             return (
-              <li key={f.q} className={`rounded-2xl border transition ${isOpen ? "border-glacier/40 bg-glacier/[0.05]" : "border-ice/10 bg-ice/[0.02]"}`}>
+              <li key={f.q} className="border-b border-frost">
                 <h3>
                   <button
                     type="button"
                     id={`faq-q-${i}`}
                     aria-expanded={isOpen}
                     aria-controls={`faq-a-${i}`}
-                    onClick={() => setOpen(isOpen ? -1 : i)}
-                    className="flex w-full items-start gap-4 p-5 text-left sm:p-6"
+                    onClick={() => setOpen(isOpen ? null : i)}
+                    className="group flex w-full items-start justify-between gap-6 py-6 text-left sm:py-8"
                   >
-                    <span className="pt-1 font-mono text-[11px] text-mist">{String(i + 1).padStart(2, "0")}</span>
-                    <span className="flex-1 font-display text-base font-semibold sm:text-lg">{f.q}</span>
-                    <Plus className={`mt-1 size-5 shrink-0 transition duration-300 ${isOpen ? "rotate-45 text-volt" : "text-mist"}`} aria-hidden="true" />
+                    <span
+                      className={`font-display text-xl font-semibold tracking-[-0.03em] transition-colors sm:text-[1.7rem] sm:leading-tight ${
+                        isOpen ? "text-slate" : "text-slate-2 group-hover:text-slate"
+                      }`}
+                    >
+                      {f.q}
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className={`relative mt-1 grid size-8 shrink-0 place-items-center rounded-full transition-colors duration-300 ${
+                        isOpen ? "bg-alpine text-white" : "bg-ice text-slate"
+                      }`}
+                    >
+                      <span className="absolute h-[1.5px] w-3 bg-current" />
+                      <span className={`absolute h-3 w-[1.5px] bg-current transition-transform duration-300 ${isOpen ? "scale-y-0" : ""}`} />
+                    </span>
                   </button>
                 </h3>
-                <motion.div
+                {/* Answers stay in the DOM for search engines; the grid-rows trick animates the height */}
+                <div
                   id={`faq-a-${i}`}
                   role="region"
                   aria-labelledby={`faq-q-${i}`}
-                  initial={false}
-                  animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
-                  transition={{ duration: 0.4, ease }}
-                  className="overflow-hidden"
                   inert={!isOpen}
+                  className={`grid transition-[grid-template-rows] duration-500 ease-[var(--ease-glide)] ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
                 >
-                  <p className="px-5 pb-6 pl-14 text-sm leading-relaxed text-mist sm:px-6 sm:pl-[3.75rem]">{f.a}</p>
-                </motion.div>
+                  <div className="overflow-hidden">
+                    <p className="max-w-2xl pb-8 pr-12 text-[17px] leading-relaxed text-slate-2">{f.a}</p>
+                  </div>
+                </div>
               </li>
             );
           })}

@@ -1,135 +1,175 @@
 @import "tailwindcss";
 
 @theme {
-  --color-night: #060a1c;
-  --color-night-2: #0b1230;
-  --color-night-3: #131c45;
-  --color-ice: #e9f3ff;
-  --color-mist: #8fa2c9;
-  --color-glacier: #7fe3ff;
-  --color-teal: #2de2c4;
-  --color-violet: #8b6cff;
-  --color-volt: #c8ff3a;
-  --color-volt-2: #e3ff92;
-  --color-flare: #ff7a59;
+  --color-snow: #f7f9fb;
+  --color-ice: #e8eef3;
+  --color-frost: #d3dde6;
+  --color-slate: #0f1720;
+  --color-slate-2: #2a3644;
+  --color-stone: #5b6878;
+  --color-glacier: #6f9fc4;
+  --color-glacier-deep: #2f5d85;
+  --color-alpine: #e0482f;
+  --color-alpine-deep: #c13a23;
 
-  --font-display: var(--font-unbounded), ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
 
-  --animate-aurora: aurora 18s ease-in-out infinite alternate;
-  --animate-pulse-ring: pulse-ring 2.4s ease-out infinite;
-  --animate-scan: scan 6s linear infinite;
-  --animate-blink: blink 1.1s steps(1) infinite;
+  --ease-glide: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-curtain: cubic-bezier(0.76, 0, 0.24, 1);
+}
 
-  @keyframes aurora {
-    0% { transform: translate3d(-8%, -4%, 0) rotate(0deg) scale(1); }
-    50% { transform: translate3d(6%, 4%, 0) rotate(8deg) scale(1.1); }
-    100% { transform: translate3d(-2%, 8%, 0) rotate(-6deg) scale(1.05); }
+@layer base {
+  html {
+    background: var(--color-snow);
+    color: var(--color-slate);
+    -webkit-text-size-adjust: 100%;
   }
-  @keyframes pulse-ring {
-    0% { transform: scale(0.6); opacity: 0.9; }
-    100% { transform: scale(2.4); opacity: 0; }
+  body {
+    background: var(--color-snow);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
-  @keyframes scan {
-    from { transform: translateY(-100%); }
-    to { transform: translateY(100%); }
+  ::selection {
+    background: var(--color-alpine);
+    color: white;
   }
-  @keyframes blink {
-    50% { opacity: 0; }
+  :focus-visible {
+    outline: 2px solid var(--color-alpine);
+    outline-offset: 3px;
   }
 }
 
-:root {
-  color-scheme: dark;
-  --background: var(--color-night);
-  --foreground: var(--color-ice);
+/* Condensed, heavy cut of Bricolage for the giant display words */
+.font-condensed {
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 75, "opsz" 96;
+  font-weight: 800;
 }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
-
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth { scroll-behavior: auto !important; }
-.lenis.lenis-stopped { overflow: hidden; }
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
-  overflow-x: clip;
-  -webkit-font-smoothing: antialiased;
-}
-
-::selection {
-  background: var(--color-volt);
-  color: var(--color-night);
-}
-
-:focus-visible {
-  outline: 2px solid var(--color-volt);
-  outline-offset: 3px;
-  border-radius: 6px;
-}
-
-/* Glass panel used across sections */
-.glass {
-  background: linear-gradient(160deg, rgb(233 243 255 / 0.07), rgb(233 243 255 / 0.02));
-  border: 1px solid rgb(233 243 255 / 0.1);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-}
-
-/* Fine HUD grid behind data sections */
-.hud-grid {
-  background-image:
-    linear-gradient(rgb(127 227 255 / 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(127 227 255 / 0.05) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
-}
-
-/* Drifting aurora glow: place inside a relative, overflow-hidden parent */
-.aurora {
-  position: absolute;
-  inset: -20%;
-  pointer-events: none;
-  filter: blur(70px);
-  opacity: 0.55;
-  background:
-    radial-gradient(40% 30% at 20% 30%, rgb(45 226 196 / 0.55), transparent 70%),
-    radial-gradient(35% 30% at 70% 20%, rgb(139 108 255 / 0.55), transparent 70%),
-    radial-gradient(30% 25% at 55% 75%, rgb(127 227 255 / 0.35), transparent 70%);
-  animation: var(--animate-aurora);
-  /* fade out before the section edges so the glow never shows a hard line */
-  mask-image: linear-gradient(to bottom, transparent 12%, #000 35%, #000 65%, transparent 88%);
-}
-
-.text-aurora {
-  background: linear-gradient(100deg, var(--color-glacier), var(--color-teal) 35%, var(--color-violet) 70%, var(--color-glacier));
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
+.text-outline {
   color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-slate);
 }
 
-/* Spotlight that follows the pointer (set --mx/--my on the element) */
-.spotlight {
-  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgb(127 227 255 / 0.16), transparent 45%);
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
-.text-balance { text-wrap: balance; }
-.text-pretty { text-wrap: pretty; }
+/* ------------------------------------------------------------------ */
+/* Intro curtain. Pure CSS, so it always leaves even without JS.        */
+/* The inline script in layout.tsx sets data-intro="skip" on repeat     */
+/* visits in the same session.                                          */
+/* ------------------------------------------------------------------ */
+.intro {
+  animation: intro-out 0.7s var(--ease-curtain) 1.05s forwards;
+}
+.intro-count {
+  animation: intro-count-out 0.4s var(--ease-curtain) 0.95s forwards;
+}
+.intro-bar {
+  transform-origin: left;
+  animation: intro-bar 1s var(--ease-glide) forwards;
+}
+[data-intro="skip"] .intro {
+  display: none;
+}
+@keyframes intro-out {
+  to {
+    transform: translate3d(0, -100%, 0);
+    visibility: hidden;
+  }
+}
+@keyframes intro-count-out {
+  to {
+    transform: translate3d(0, -40%, 0);
+    opacity: 0;
+  }
+}
+@keyframes intro-bar {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
 
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { scrollbar-width: none; }
+/* Hero entrance: waits for the curtain on a first visit */
+.hero-rise {
+  opacity: 0;
+  transform: translate3d(0, 110%, 0);
+  animation: hero-rise 1.1s var(--ease-glide) forwards;
+  animation-delay: calc(1.25s + var(--d, 0s));
+}
+[data-intro="skip"] .hero-rise {
+  animation-delay: calc(0.1s + var(--d, 0s));
+}
+@keyframes hero-rise {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Slow drift of the hero photo */
+.hero-drift {
+  animation: hero-drift 28s ease-in-out infinite alternate;
+}
+@keyframes hero-drift {
+  from {
+    transform: scale(1.12) translate3d(-2%, 0, 0);
+  }
+  to {
+    transform: scale(1.12) translate3d(2%, -1.5%, 0);
+  }
+}
+
+@keyframes scrollcue {
+  0% {
+    transform: translate3d(0, -100%, 0);
+  }
+  100% {
+    transform: translate3d(0, 250%, 0);
+  }
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
+  .intro {
+    display: none;
+  }
+  .hero-rise {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .hero-drift {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }

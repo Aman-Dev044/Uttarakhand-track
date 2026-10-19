@@ -13,27 +13,25 @@ export type Trek = {
   altitudeFt: number;
   price: number;
   image: string;
-  /** One-line field note shown on cards and in structured data */
+  /** One-line description used in the trek index and in structured data */
   note: string;
   /** 1–12, months the trail is in good condition */
   months: number[];
-  featured?: boolean;
 };
 
 export const treks: Trek[] = [
   {
-    slug: "roopkund",
-    name: "Roopkund",
+    slug: "kedarkantha",
+    name: "Kedarkantha",
     state: "Uttarakhand",
-    region: "Chamoli, Garhwal",
-    nights: 7,
-    grade: "Moderate–Difficult",
-    altitudeFt: 15800,
-    price: 17999,
-    image: "/images/roopkund.jpg",
-    note: "A glacial tarn below Trishul, approached over the Ali and Bedni meadows and the knife-edge of Junargali.",
-    months: [5, 6, 9, 10],
-    featured: true,
+    region: "Uttarkashi, Garhwal",
+    nights: 4,
+    grade: "Easy–Moderate",
+    altitudeFt: 12500,
+    price: 5499,
+    image: "/images/kedarkantha.jpg",
+    note: "Pine forest, a frozen Juda ka Talab and a summit sunrise that takes in Swargarohini and Bandarpunch.",
+    months: [12, 1, 2, 3, 4],
   },
   {
     slug: "valley-of-flowers",
@@ -45,50 +43,21 @@ export const treks: Trek[] = [
     altitudeFt: 14100,
     price: 10499,
     image: "/images/valley-of-flowers.jpg",
-    note: "A UNESCO World Heritage valley with 500+ species in bloom, plus the climb to Hemkund Sahib.",
+    note: "A UNESCO-listed valley that blooms with hundreds of species each monsoon, paired with the climb to Hemkund Sahib.",
     months: [7, 8, 9],
-    featured: true,
   },
   {
-    slug: "kedarkantha",
-    name: "Kedarkantha",
+    slug: "roopkund",
+    name: "Roopkund",
     state: "Uttarakhand",
-    region: "Uttarkashi, Garhwal",
-    nights: 4,
-    grade: "Easy–Moderate",
-    altitudeFt: 12500,
-    price: 5499,
-    image: "/images/kedarkantha.jpg",
-    note: "The classic first snow summit: pine camps, a frozen Juda ka Talab and a 360° sunrise on top.",
-    months: [12, 1, 2, 3, 4],
-    featured: true,
-  },
-  {
-    slug: "har-ki-dun",
-    name: "Har Ki Dun",
-    state: "Uttarakhand",
-    region: "Govind Pashu Vihar",
-    nights: 6,
-    grade: "Easy–Moderate",
-    altitudeFt: 11800,
-    price: 12500,
-    image: "/images/har-ki-dun.jpg",
-    note: "A cradle-shaped valley under Swargarohini, reached through the wooden villages of Osla and Seema.",
-    months: [4, 5, 6, 9, 10, 11, 12],
-    featured: true,
-  },
-  {
-    slug: "chandrashila",
-    name: "Chopta · Tungnath · Chandrashila",
-    state: "Uttarakhand",
-    region: "Rudraprayag, Garhwal",
-    nights: 3,
-    grade: "Easy",
-    altitudeFt: 12100,
-    price: 6500,
-    image: "/images/chandrashila.jpg",
-    note: "Short and steep: Tungnath, the highest Shiva temple, then Chandrashila's panorama of Chaukhamba.",
-    months: [1, 2, 3, 4, 5, 10, 11, 12],
+    region: "Chamoli, Garhwal",
+    nights: 7,
+    grade: "Moderate–Difficult",
+    altitudeFt: 15800,
+    price: 17999,
+    image: "/images/roopkund.jpg",
+    note: "The mystery lake under Trishul, reached across Ali and Bedni Bugyal and the narrow ridge of Junargali.",
+    months: [5, 6, 9, 10],
   },
   {
     slug: "kuari-pass",
@@ -100,9 +69,34 @@ export const treks: Trek[] = [
     altitudeFt: 12516,
     price: 7499,
     image: "/images/kuari-pass.jpg",
-    note: "The Curzon Trail, with Nanda Devi, Dronagiri and Kamet lined up across one horizon.",
+    note: "Lord Curzon's old route, where Nanda Devi, Dronagiri and Kamet stand in a single line across the sky.",
     months: [1, 2, 3, 4, 10, 11, 12],
-    featured: true,
+  },
+  {
+    slug: "har-ki-dun",
+    name: "Har Ki Dun",
+    state: "Uttarakhand",
+    region: "Govind Pashu Vihar",
+    nights: 6,
+    grade: "Easy–Moderate",
+    altitudeFt: 11800,
+    price: 12500,
+    image: "/images/har-ki-dun.jpg",
+    note: "A hanging valley below Swargarohini, walked through the carved wooden villages of Osla and Seema.",
+    months: [4, 5, 6, 9, 10, 11, 12],
+  },
+  {
+    slug: "chandrashila",
+    name: "Chopta · Tungnath · Chandrashila",
+    state: "Uttarakhand",
+    region: "Rudraprayag, Garhwal",
+    nights: 3,
+    grade: "Easy",
+    altitudeFt: 12100,
+    price: 6500,
+    image: "/images/chandrashila.jpg",
+    note: "The highest Shiva temple in the world, then a short, steep push to a summit facing Chaukhamba.",
+    months: [1, 2, 3, 4, 5, 10, 11, 12],
   },
   {
     slug: "brahmatal",
@@ -113,8 +107,8 @@ export const treks: Trek[] = [
     grade: "Easy–Moderate",
     altitudeFt: 12250,
     price: 6999,
-    image: "/images/brahmatal.jpg",
-    note: "Frozen lakes and ridge walks facing Trishul and Nanda Ghunti; a deep-winter favourite.",
+    image: "/images/brahmatal-lake.jpg",
+    note: "Snowbound lakes and long ridge walks with Trishul and Nanda Ghunti for company, best in deep winter.",
     months: [12, 1, 2, 3],
   },
   {
@@ -127,9 +121,8 @@ export const treks: Trek[] = [
     altitudeFt: 12000,
     price: 6500,
     image: "/images/dayara-bugyal.jpg",
-    note: "Wide rolling meadows above Raithal, where villagers play Holi with butter every August.",
+    note: "Rolling high pastures above Raithal village, soft underfoot in autumn and deep in snow by January.",
     months: [1, 2, 3, 4, 5, 10, 11, 12],
-    featured: true,
   },
   {
     slug: "ali-bedni-bugyal",
@@ -141,7 +134,7 @@ export const treks: Trek[] = [
     altitudeFt: 12570,
     price: 10500,
     image: "/images/ali-bedni-bugyal.jpg",
-    note: "Some of Asia's largest high meadows, quieter than Roopkund and facing Trishul all day.",
+    note: "Two vast meadows joined into one walk, with all of Roopkund's views and a fraction of its crowds.",
     months: [5, 6, 9, 10, 11],
   },
   {
@@ -154,7 +147,7 @@ export const treks: Trek[] = [
     altitudeFt: 15500,
     price: 18000,
     image: "/images/kedartal.jpg",
-    note: "A steep gorge and boulder climb to the lake beneath Thalay Sagar. For experienced trekkers.",
+    note: "A steep gorge and boulder fields lead to a still lake beneath Thalay Sagar. For trekkers with altitude behind them.",
     months: [5, 6, 9, 10],
   },
   {
@@ -167,7 +160,7 @@ export const treks: Trek[] = [
     altitudeFt: 14600,
     price: 18999,
     image: "/images/gaumukh-tapovan.jpg",
-    note: "To the snout of the Gangotri glacier, where the Ganga begins, and a camp under Shivling.",
+    note: "Walk to the snout of the Gangotri glacier, the source of the Ganga, and camp on a meadow under Shivling.",
     months: [5, 6, 9, 10],
   },
   {
@@ -180,7 +173,7 @@ export const treks: Trek[] = [
     altitudeFt: 16200,
     price: 20500,
     image: "/images/har-ki-dun.jpg",
-    note: "The highest crossing on this list: Tons valley to Yamunotri via Ruinsara Tal and Bandarpunch.",
+    note: "The highest crossing we run: from the Tons valley past Ruinsara Tal and over to Yamunotri.",
     months: [5, 6, 9, 10],
   },
   {
@@ -193,7 +186,7 @@ export const treks: Trek[] = [
     altitudeFt: 14100,
     price: 7500,
     image: "/images/hampta-pass.jpg",
-    note: "A dramatic crossover from green Kullu to the cold desert of Lahaul, with Chandratal on the side.",
+    note: "Cross from the green Kullu side to the bare cold desert of Lahaul in a single day, with Chandratal to finish.",
     months: [6, 7, 8, 9],
   },
   {
@@ -206,7 +199,7 @@ export const treks: Trek[] = [
     altitudeFt: 15000,
     price: 15500,
     image: "/images/buran-ghati.jpg",
-    note: "Old forests, the Dunda meadows and a snow-wall descent on ropes from the pass.",
+    note: "Old-growth forest, the Dunda meadows and a rope-assisted slide down the snow wall below the pass.",
     months: [5, 6, 9, 10],
   },
   {
@@ -219,74 +212,145 @@ export const treks: Trek[] = [
     altitudeFt: 13750,
     price: 16999,
     image: "/images/kashmir-great-lakes.jpg",
-    note: "Seven turquoise alpine lakes in a week, linked by passes and flowering meadows.",
+    note: "A week of turquoise alpine lakes strung together by high passes and meadows full of flowers.",
     months: [7, 8, 9],
   },
 ];
 
+export const trekBySlug = (slug: string) => treks.find((t) => t.slug === slug)!;
+
 export const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] as const;
+export const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+] as const;
+
+/** The five treks told as chapters in the sticky scrollytelling section */
+export const signature = [
+  {
+    slug: "kedarkantha",
+    kicker: "Winter · December to April",
+    title: "Your first summit, in snow.",
+    copy: "Four nights through oak and pine to a peak you can see from your first camp. The final climb starts by headtorch and ends with Swargarohini turning pink at dawn.",
+  },
+  {
+    slug: "valley-of-flowers",
+    kicker: "Monsoon · July to September",
+    title: "A valley that blooms on schedule.",
+    copy: "When the rest of the Himalaya hides in cloud, this glacial valley in Chamoli turns into a field of blue poppies, cobra lilies and primulas. Hemkund Sahib waits above it.",
+  },
+  {
+    slug: "kuari-pass",
+    kicker: "Autumn & winter · October to April",
+    title: "The widest view in Garhwal.",
+    copy: "Short days, easy gradients and one moment on the pass when Nanda Devi, Dronagiri and Kamet line up in front of you. The best first look at the big peaks.",
+  },
+  {
+    slug: "roopkund",
+    kicker: "Summer & autumn · May, June, September, October",
+    title: "Seven nights to a legend.",
+    copy: "Ali and Bedni Bugyal, the stone shrine at Patar Nachauni and the ridge of Junargali. A real expedition, paced so that your body arrives as ready as your head.",
+  },
+  {
+    slug: "har-ki-dun",
+    kicker: "Spring & autumn · April to December",
+    title: "Villages older than the trail.",
+    copy: "Walk through Osla and Seema, where houses are carved from deodar and the valley ends at the foot of Swargarohini. Gentle, long and deeply quiet.",
+  },
+] as const;
+
+export const seasons = [
+  {
+    key: "winter",
+    name: "Winter",
+    span: "Dec – Feb",
+    months: [12, 1, 2],
+    image: "/images/kedarkantha.jpg",
+    alt: "Snow-covered Kedarkantha peak above a forest of red-leaved trees",
+    copy: "Clear, cold skies and snow down to 9,000 ft. Summit treks are short, campsites are white and the light is sharp.",
+  },
+  {
+    key: "spring",
+    name: "Spring",
+    span: "Mar – May",
+    months: [3, 4, 5],
+    image: "/images/chopta.jpg",
+    alt: "A tent in the meadow at Chopta with pines and Himalayan peaks behind",
+    copy: "Rhododendron forests go red, the snow line climbs and the higher meadows open up for the first time in months.",
+  },
+  {
+    key: "monsoon",
+    name: "Monsoon",
+    span: "Jun – Aug",
+    months: [6, 7, 8],
+    image: "/images/valley-of-flowers.jpg",
+    alt: "Wildflowers covering the floor of the Valley of Flowers between steep green slopes",
+    copy: "Rain on the lower roads and flowers up high. This is the season for the Valley of Flowers and the rain-shadow crossings into Lahaul and Kashmir.",
+  },
+  {
+    key: "autumn",
+    name: "Autumn",
+    span: "Sep – Nov",
+    months: [9, 10, 11],
+    image: "/images/kuari-pass.jpg",
+    alt: "Sheep grazing on golden meadows at Kuari Pass with a range of snow peaks behind",
+    copy: "Washed-clean air after the rains, golden grass and the longest views of the year. The best window for high passes.",
+  },
+] as const;
 
 export const stats = [
-  { value: 150, suffix: "+", label: "Curated trails" },
-  { value: 16200, suffix: " ft", label: "Highest pass we lead" },
-  { value: 5000, suffix: "+", label: "Trekkers a year" },
-  { value: 100, suffix: "+", label: "Certified leaders" },
+  { value: 15, suffix: "", label: "Treks on our signature list" },
+  { value: 16200, suffix: " ft", label: "Highest pass on our list" },
+  { value: 5000, suffix: "+", label: "Trekkers on the trail each year" },
+  { value: 2018, suffix: "", label: "Leading treks from Dehradun since" },
 ] as const;
 
 export const adventures = [
   {
     key: "rafting",
-    title: "White-water rafting",
-    place: "Rishikesh, Ganga",
+    title: "Rafting the Ganga",
+    place: "Rishikesh",
     image: "/images/rishikesh.jpg",
-    alt: "Rafters on the Ganga near Ram Jhula, Rishikesh",
-    copy: "Run Grade II–IV rapids like Golf Course and Roller Coaster on the stretches from Shivpuri, Marine Drive and Kaudiyala.",
-    spec: "Sep – Jun",
+    alt: "A raft and swimmers on the Ganga near Rishikesh",
+    copy: "Grade II to IV rapids between Shivpuri and Rishikesh, with names like Roller Coaster and Golf Course.",
+    when: "Sep – Jun",
   },
   {
     key: "skiing",
-    title: "Skiing & snow sports",
-    place: "Auli, Chamoli",
+    title: "Skiing at Auli",
+    place: "Chamoli",
     image: "/images/auli.jpg",
-    alt: "View over Auli from the ropeway, with a hilltop temple",
-    copy: "Oak-fringed slopes facing Nanda Devi, reached by the Joshimath ropeway, with beginner courses through the winter.",
-    spec: "Jan – Mar",
+    alt: "A small hut on deep snow slopes at Auli",
+    copy: "Oak-fringed slopes facing Nanda Devi, a ropeway up from Joshimath and beginner courses all winter.",
+    when: "Jan – Mar",
   },
   {
     key: "wildlife",
-    title: "Tiger country",
+    title: "Safari in Corbett",
     place: "Jim Corbett National Park",
     image: "/images/corbett.jpg",
-    alt: "Morning mist over the Dhikala grasslands in Corbett Tiger Reserve",
-    copy: "India's first national park, set up in 1936. Jeep safaris through Bijrani, Jhirna and the Dhikala grasslands.",
-    spec: "Nov – Jun",
-  },
-  {
-    key: "water",
-    title: "Lake & water sports",
-    place: "Tehri Lake",
-    image: "/images/tehri.jpg",
-    alt: "Tehri Lake reservoir surrounded by hills",
-    copy: "Kayaking, jet-skis and floating huts on a vast Himalayan reservoir, an easy drive from Rishikesh.",
-    spec: "Oct – Jun",
+    alt: "Morning mist over the grasslands of Corbett Tiger Reserve",
+    copy: "India's oldest national park, founded in 1936. Jeep safaris through sal forest and the Dhikala grasslands.",
+    when: "Nov – Jun",
   },
   {
     key: "camping",
-    title: "Camping under stars",
-    place: "Chopta & riverside camps",
+    title: "Camping in the valleys",
+    place: "Chopta & the Ganga",
     image: "/images/camp.jpg",
-    alt: "Tents at a campsite in the Himalayan foothills",
-    copy: "Meadow camps at Chopta and riverside camps near Rishikesh: bonfires, clear skies and the Milky Way overhead.",
-    spec: "Year-round",
-  },
-  {
-    key: "views",
-    title: "Hill-station slow days",
-    place: "Kausani & Binsar, Kumaon",
-    image: "/images/kausani.jpg",
-    alt: "Layered hills and Himalayan skyline in Kumaon",
-    copy: "A 300 km sweep of peaks from Kausani and Binsar, tea gardens, and village walks between Kumaoni homestays.",
-    spec: "Oct – Jun",
+    alt: "A broad green valley with a river and snow peaks, used for camping",
+    copy: "Meadow camps near Chopta and riverside camps above Rishikesh, with clear skies and a fire at night.",
+    when: "Year-round",
   },
 ] as const;
 
@@ -296,30 +360,27 @@ export const dhams = [
     deity: "Goddess Yamuna",
     district: "Uttarkashi",
     altitudeM: 3293,
-    access: "6 km trek from Janki Chatti",
-    copy: "The first stop. Pilgrims cook rice in the Surya Kund hot spring and carry it home as prasad.",
+    access: "6 km walk from Janki Chatti",
+    copy: "The yatra begins at the source of the Yamuna, where pilgrims cook rice in the Surya Kund hot spring.",
     image: "/images/yamunotri.jpg",
-    leg: "Haridwar → Janki Chatti · ~220 km",
   },
   {
     name: "Gangotri",
     deity: "Goddess Ganga",
     district: "Uttarkashi",
     altitudeM: 3100,
-    access: "Motorable, about 100 km beyond Uttarkashi",
-    copy: "Here the Ganga is the Bhagirathi. Its glacier source at Gaumukh is a 19 km walk further up.",
+    access: "Motorable, beyond Uttarkashi",
+    copy: "The Ganga flows here as the Bhagirathi. Its glacier source at Gaumukh is a 19 km walk upstream.",
     image: "/images/gangotri.jpg",
-    leg: "Janki Chatti → Gangotri · ~230 km",
   },
   {
     name: "Kedarnath",
     deity: "Lord Shiva",
     district: "Rudraprayag",
     altitudeM: 3583,
-    access: "16 km trek from Gaurikund, or helicopter",
-    copy: "A Jyotirlinga of grey stone set against the Kedarnath massif, the most demanding leg of the yatra.",
+    access: "16 km walk from Gaurikund, or helicopter",
+    copy: "A stone Jyotirlinga temple against the Kedarnath massif, and the most demanding leg of the journey.",
     image: "/images/kedarnath.jpg",
-    leg: "Gangotri → Sonprayag · ~250 km",
   },
   {
     name: "Badrinath",
@@ -327,87 +388,75 @@ export const dhams = [
     district: "Chamoli",
     altitudeM: 3133,
     access: "Motorable via Joshimath",
-    copy: "The painted temple on the Alaknanda between Nar and Narayan, a short drive from Mana village.",
+    copy: "The painted temple on the Alaknanda, between the Nar and Narayan ranges, close to Mana village.",
     image: "/images/badrinath.jpg",
-    leg: "Sonprayag → Badrinath · ~220 km",
   },
 ] as const;
 
-export const destinations = {
-  Garhwal: [
-    { name: "Rishikesh", note: "Yoga, rafting and the Ganga Aarti", coords: "30.09°N 78.27°E", image: "/images/rishikesh.jpg" },
-    { name: "Haridwar", note: "Evening aarti at Har Ki Pauri", coords: "29.95°N 78.16°E", image: "/images/haridwar.jpg" },
-    { name: "Mussoorie", note: "Mall Road and Doon valley views", coords: "30.46°N 78.07°E", image: "/images/mussoorie.jpg" },
-    { name: "Auli", note: "Ski slopes facing Nanda Devi", coords: "30.53°N 79.57°E", image: "/images/auli.jpg" },
-    { name: "Chopta", note: "Meadows below Tungnath", coords: "30.48°N 79.20°E", image: "/images/chopta.jpg" },
-    { name: "Tehri", note: "Water sports on a mountain lake", coords: "30.38°N 78.48°E", image: "/images/tehri.jpg" },
-  ],
-  Kumaon: [
-    { name: "Nainital", note: "Boating on Naini Lake", coords: "29.38°N 79.46°E", image: "/images/nainital.jpg" },
-    { name: "Jim Corbett", note: "Tigers, elephants and sal forest", coords: "29.53°N 78.77°E", image: "/images/corbett.jpg" },
-    { name: "Kausani", note: "Sunrise over Trishul and Nanda Devi", coords: "29.84°N 79.60°E", image: "/images/kausani.jpg" },
-    { name: "Binsar", note: "Wildlife sanctuary with a long skyline", coords: "29.70°N 79.75°E", image: "/images/binsar.jpg" },
-    { name: "Ranikhet", note: "Orchards, golf and a Himalayan panorama", coords: "29.64°N 79.43°E", image: "/images/hero-2.jpg" },
-  ],
-} as const;
-
-export const safetyRules = [
-  {
-    code: "01",
-    title: "Climb high, sleep low",
-    copy: "Above 10,000 ft our itineraries raise the sleeping altitude gradually and use acclimatisation walks to higher ground.",
-  },
-  {
-    code: "02",
-    title: "Measured twice a day",
-    copy: "Leaders log oxygen saturation and pulse with an oximeter every morning and evening, and act on the trend.",
-  },
-  {
-    code: "03",
-    title: "Hydrate like it's work",
-    copy: "Four to five litres a day, warm. Dehydration mimics altitude sickness and makes it worse.",
-  },
-  {
-    code: "04",
-    title: "The leader makes the call",
-    copy: "Summit pushes have turn-around times. Weather or a group member's health always wins over the summit.",
-  },
+export const destinations = [
+  { name: "Rishikesh", region: "Garhwal", note: "Yoga, rafting and the evening aarti", image: "/images/rishikesh.jpg", alt: "The Ganga at Rishikesh" },
+  { name: "Haridwar", region: "Garhwal", note: "Lamps on the river at Har Ki Pauri", image: "/images/haridwar.jpg", alt: "Fire lamps raised during the Ganga aarti at Haridwar" },
+  { name: "Mussoorie", region: "Garhwal", note: "Deodar ridges above the Doon valley", image: "/images/mussoorie.jpg", alt: "Tall deodar trees on a ridge at Mussoorie" },
+  { name: "Auli", region: "Garhwal", note: "Snow slopes facing Nanda Devi", image: "/images/auli.jpg", alt: "Snow slopes at Auli" },
+  { name: "Chopta", region: "Garhwal", note: "Meadows below Tungnath", image: "/images/chopta.jpg", alt: "A tent in the meadow at Chopta" },
+  { name: "Tehri", region: "Garhwal", note: "A mountain lake for water sports", image: "/images/tehri.jpg", alt: "Tehri Lake surrounded by green hills" },
+  { name: "Nainital", region: "Kumaon", note: "Boats on Naini Lake", image: "/images/nainital.jpg", alt: "Rowing boats moored on Naini Lake" },
+  { name: "Kausani", region: "Kumaon", note: "Sunrise over Trishul and Nanda Devi", image: "/images/kausani.jpg", alt: "A sea of cloud below the Himalayan range at Kausani" },
+  { name: "Binsar", region: "Kumaon", note: "A forest sanctuary with a 300 km skyline", image: "/images/binsar.jpg", alt: "Snow peaks above a sea of cloud seen from Binsar" },
+  { name: "Ranikhet", region: "Kumaon", note: "Orchards, pine and a wide panorama", image: "/images/hero-2.jpg", alt: "Layered green hills below a long line of snow peaks" },
+  { name: "Jim Corbett", region: "Kumaon", note: "Tigers, elephants and sal forest", image: "/images/corbett.jpg", alt: "Mist over the Corbett grasslands" },
 ] as const;
 
-export const kit = ["Pulse oximeter", "Emergency oxygen", "First-aid kit", "Microspikes & gaiters"] as const;
+export const pillars = [
+  {
+    title: "Paced for the altitude",
+    copy: "Itineraries gain height gradually above 10,000 ft, with acclimatisation walks built in rather than bolted on.",
+  },
+  {
+    title: "Checked twice a day",
+    copy: "Leaders record oxygen saturation and pulse every morning and evening, and act on the trend, not the mood.",
+  },
+  {
+    title: "Small groups, local crews",
+    copy: "Guides, cooks and porters from the valleys we walk, so the money and the knowledge stay in the mountains.",
+  },
+  {
+    title: "One desk in Dehradun",
+    copy: "An operations team tracks every batch, handles weather changes and answers your call before and after the trek.",
+  },
+] as const;
 
 // Sample reviews for layout only. Replace with verified reviews before going live.
 export const reviews = [
-  { name: "Ananya R.", city: "Bengaluru", trek: "Kedarkantha", quote: "The summit push started at 3 a.m. under more stars than I've ever seen. The leader checked every one of us before we moved." },
-  { name: "Rohit M.", city: "Pune", trek: "Roopkund", quote: "Oxygen levels logged morning and night, briefings that actually made sense, and Junargali at first light. Worth every step." },
-  { name: "Sneha & Karan", city: "Delhi", trek: "Valley of Flowers", quote: "We came for the flowers and stayed for the food at camp. Pickup from Rishikesh to drop-off was flawless." },
-  { name: "Vikram S.", city: "Kolkata", trek: "Char Dham Yatra", quote: "They sorted helicopter slots for Kedarnath and worked around a landslide delay. My parents never felt rushed." },
-  { name: "Arjun T.", city: "Hyderabad", trek: "Kuari Pass", quote: "My first Himalayan trek. The pacing was patient and the Nanda Devi view on the pass made me want a second one." },
+  { name: "Meera K.", city: "Mumbai", trek: "Kedarkantha", quote: "I had never seen snow before this trek. By the summit morning I was the one telling the group to keep going." },
+  { name: "Aditya P.", city: "Jaipur", trek: "Roopkund", quote: "Every evening the leader went tent to tent with the oximeter. That quiet attention is why I'd book with them again." },
+  { name: "Farah & Imran", city: "Lucknow", trek: "Valley of Flowers", quote: "The rain stopped the moment we walked into the valley. Our guide knew the name of every flower we pointed at." },
+  { name: "Sanjay R.", city: "Chennai", trek: "Char Dham Yatra", quote: "A road block near Joshimath cost us a day, and they had a new plan for my parents before we had even asked." },
 ] as const;
 
 export const faqs = [
   {
-    q: "Which Uttarakhand trek should I pick for my first time?",
-    a: "Kedarkantha in winter, Chopta–Chandrashila for most of the year, and Dayara Bugyal are the easiest good first treks. Climbs are gradual, trails are clear, and each tops out around 12,000 ft with big views and no technical sections. The trek finder on this page narrows it down by your month and fitness.",
+    q: "Which Uttarakhand trek is best for beginners?",
+    a: "Kedarkantha in winter, Chopta–Tungnath–Chandrashila for most of the year, and Dayara Bugyal are the gentlest good first treks. Each has a gradual climb, a clear trail and a summit or meadow around 12,000 ft with big Himalayan views and no technical sections.",
   },
   {
-    q: "How do altitude and grade compare across these treks?",
-    a: "Easy and easy–moderate treks top out between about 11,800 and 14,100 ft. Moderate–difficult routes like Roopkund, Gaumukh Tapovan, Buran Ghati and Bali Pass go from 14,600 to 16,200 ft with longer days. Kedartal is graded difficult for its steep gorge and boulder sections. The compare table sorts all of them by altitude, nights and price.",
+    q: "What is the best month to trek in Uttarakhand?",
+    a: "It depends on what you want to see. December to March is for snow treks such as Kedarkantha and Brahmatal, April and May for rhododendron forests and opening meadows, July and August for the Valley of Flowers, and September to November for the clearest views and the high passes.",
   },
   {
-    q: "When does the Char Dham Yatra open and close?",
-    a: "The shrines usually open in late April or May around Akshaya Tritiya and close for winter in October or November around Diwali and Bhai Dooj. The temple committees announce exact dates every year. Avoid peak monsoon in July and August, when landslides are frequent.",
-  },
-  {
-    q: "What fitness level do I need?",
-    a: "For easy and moderate treks, aim to jog 5 km in under 35 minutes about four to six weeks before you leave. Difficult treks like Kedartal or Bali Pass need previous high-altitude experience. Every booking comes with a free training plan.",
+    q: "How fit do I need to be?",
+    a: "For easy and moderate treks, aim to jog 5 km in under 35 minutes four to six weeks before you leave. Difficult routes such as Kedartal and Bali Pass need earlier high-altitude experience. Every booking includes a free training plan.",
   },
   {
     q: "What does the trek price include?",
-    a: "Guesthouse and tent stays, vegetarian meals on the trek, forest permits and entry fees, certified leaders and local guides, safety equipment such as oxygen, first-aid and microspikes, and cooks and porters for common gear. Transport from Dehradun is an add-on on most treks.",
+    a: "Stays in guesthouses and tents, vegetarian meals on the trek, forest permits and entry fees, certified trek leaders and local guides, safety gear such as oxygen, a first-aid kit and microspikes, and cooks and porters for common equipment. Transport from Dehradun is an add-on on most treks.",
+  },
+  {
+    q: "When is the Char Dham Yatra open?",
+    a: "The four temples usually open in late April or May around Akshaya Tritiya and close in October or November around Diwali and Bhai Dooj. The temple committees announce the exact dates each year, and pilgrims must register with the state government before travelling.",
   },
   {
     q: "Is it safe to trek solo, including for women?",
-    a: "Yes. Many of our trekkers come solo, and a large share are women. Batches have women trek leaders where possible, tents are shared only with same-gender trekkers, and an operations desk in Dehradun keeps track of every group.",
+    a: "Yes. Many of our trekkers travel alone and a large share are women. Tents are shared only with trekkers of the same gender, batches have women leaders where possible, and the Dehradun operations desk tracks every group.",
   },
 ] as const;

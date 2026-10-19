@@ -2,140 +2,132 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
-import { ArrowUpRight, Menu, X } from "lucide-react";
 import { navLinks, site, telHref } from "@/data/site";
-import { Logo, Magnetic, ease } from "./ui";
+import { Arrow, ease, Logo, Magnetic } from "./ui";
 
 export function Navbar() {
   const { scrollY } = useScroll();
+  const [hidden, setHidden] = useState(false);
   const [solid, setSolid] = useState(false);
   const [open, setOpen] = useState(false);
 
-  useMotionValueEvent(scrollY, "change", (y) => setSolid(y > 40));
+  useMotionValueEvent(scrollY, "change", (y) => {
+    const prev = scrollY.getPrevious() ?? 0;
+    setSolid(y > 40);
+    setHidden(y > 400 && y > prev + 4 && !open);
+    if (y < prev - 4) setHidden(false);
+  });
 
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
-    document.addEventListener("keydown", onKey);
     document.documentElement.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
     return () => {
-      document.removeEventListener("keydown", onKey);
       document.documentElement.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
     };
   }, [open]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
-      <motion.nav
-        aria-label="Primary"
-        initial={{ y: -40, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease, delay: 0.2 }}
-        className={`mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-2xl px-4 py-2.5 transition-[background-color,border-color,box-shadow] duration-500 sm:px-5 ${
-          solid ? "border border-ice/10 bg-night/80 shadow-2xl shadow-black/40 backdrop-blur-xl" : "border border-transparent"
+    <>
+      <motion.header
+        animate={{ y: hidden ? "-110%" : "0%" }}
+        transition={{ duration: 0.45, ease }}
+        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow] duration-500 ${
+          solid && !open ? "bg-snow/85 shadow-[0_1px_0_rgba(15,23,32,0.06)] backdrop-blur-md" : ""
         }`}
       >
-        <a href="#top" aria-label={`${site.name} home`} className="shrink-0">
-          <Logo />
-        </a>
-
-        <ul className="hidden items-center gap-1 lg:flex">
-          {navLinks.map((l) => (
-            <li key={l.href}>
+        <nav aria-label="Main" className="mx-auto flex h-16 max-w-[1600px] items-center justify-between gap-6 px-5 sm:h-[72px] sm:px-10">
+          <a href="#top" aria-label={`${site.name}, back to top`} className="relative z-10">
+            <Logo />
+          </a>
+          <ul className="hidden items-center gap-1 lg:flex">
+            {navLinks.map((l) => (
+              <li key={l.href}>
+                <a href={l.href} className="group relative rounded-full px-3.5 py-2 text-[14px] font-medium text-slate-2 transition-colors hover:text-slate">
+                  {l.label}
+                  <span className="absolute inset-x-3.5 bottom-1 h-px origin-left scale-x-0 bg-alpine transition-transform duration-300 group-hover:scale-x-100" />
+                </a>
+              </li>
+            ))}
+          </ul>
+          <div className="flex items-center gap-2">
+            <span className="hidden sm:block">
+              <Magnetic>
               <a
-                href={l.href}
-                className="rounded-full px-3.5 py-2 text-sm text-ice/75 transition hover:bg-ice/10 hover:text-ice"
+                href="#plan"
+                className="group inline-flex items-center gap-2 rounded-full bg-slate py-2.5 pl-5 pr-4 text-[14px] font-medium text-snow transition-colors hover:bg-alpine"
               >
-                {l.label}
+                Plan a trek
+                <Arrow className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
               </a>
-            </li>
-          ))}
-        </ul>
-
-        <div className="flex items-center gap-2">
-          <div className="hidden sm:block">
-          <Magnetic>
-            <a
-              href="#plan"
-              className="group inline-flex items-center gap-2 rounded-full bg-volt px-4 py-2.5 text-sm font-semibold text-night transition hover:bg-volt-2"
+              </Magnetic>
+            </span>
+            <button
+              type="button"
+              onClick={() => setOpen((o) => !o)}
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              className="relative z-10 grid size-11 place-items-center rounded-full bg-white shadow-[0_0_0_1px_rgba(15,23,32,0.08)] lg:hidden"
             >
-              Plan my climb
-              <ArrowUpRight className="size-4 transition group-hover:rotate-45" aria-hidden="true" />
-            </a>
-          </Magnetic>
+              <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
+              <span aria-hidden="true" className="relative block h-3 w-5">
+                <span className={`absolute left-0 h-[1.5px] w-5 bg-slate transition-all duration-300 ${open ? "top-1.5 rotate-45" : "top-0"}`} />
+                <span className={`absolute left-0 h-[1.5px] w-5 bg-slate transition-all duration-300 ${open ? "top-1.5 -rotate-45" : "top-3"}`} />
+              </span>
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            aria-label="Open menu"
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            className="grid size-11 place-items-center rounded-full border border-ice/15 text-ice lg:hidden"
-          >
-            <Menu className="size-5" aria-hidden="true" />
-          </button>
-        </div>
-      </motion.nav>
+        </nav>
+      </motion.header>
 
       <AnimatePresence>
         {open && (
           <motion.div
             id="mobile-menu"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Menu"
             data-lenis-prevent
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[70] overflow-y-auto bg-night/95 px-6 pb-10 pt-5 backdrop-blur-2xl lg:hidden"
+            initial={{ clipPath: "inset(0 0 100% 0)" }}
+            animate={{ clipPath: "inset(0 0 0% 0)" }}
+            exit={{ clipPath: "inset(0 0 100% 0)" }}
+            transition={{ duration: 0.6, ease }}
+            className="fixed inset-0 z-40 flex flex-col justify-between overflow-y-auto bg-snow px-5 pb-8 pt-24 lg:hidden"
           >
-            <div className="aurora" aria-hidden="true" />
-            <div className="relative flex items-center justify-between">
-              <Logo />
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                aria-label="Close menu"
-                className="grid size-11 place-items-center rounded-full border border-ice/15"
-                autoFocus
-              >
-                <X className="size-5" aria-hidden="true" />
-              </button>
-            </div>
-            <ul className="relative mt-12 space-y-1">
+            <ul className="space-y-1">
               {navLinks.map((l, i) => (
-                <motion.li
-                  key={l.href}
-                  initial={{ opacity: 0, x: -24 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.06 * i + 0.1, duration: 0.5, ease }}
-                >
-                  <a
+                <li key={l.href} className="overflow-hidden">
+                  <motion.a
                     href={l.href}
                     onClick={() => setOpen(false)}
-                    className="flex items-baseline gap-4 border-b border-ice/10 py-4 font-display text-2xl font-semibold"
+                    initial={{ y: "100%" }}
+                    animate={{ y: "0%" }}
+                    transition={{ duration: 0.7, ease, delay: 0.15 + i * 0.05 }}
+                    className="flex items-baseline justify-between border-b border-frost py-3 font-display text-4xl font-semibold tracking-[-0.04em] text-slate"
                   >
-                    <span className="font-mono text-xs text-glacier">0{i + 1}</span>
                     {l.label}
-                  </a>
-                </motion.li>
+                    <span className="text-sm font-medium tracking-normal text-stone">0{i + 1}</span>
+                  </motion.a>
+                </li>
               ))}
             </ul>
-            <div className="relative mt-10 space-y-3 font-mono text-sm text-mist">
-              {site.phones.map((p) => (
-                <a key={p} href={telHref(p)} className="block hover:text-ice">
-                  {p}
-                </a>
-              ))}
-              <a href="#plan" onClick={() => setOpen(false)} className="mt-6 inline-flex rounded-full bg-volt px-5 py-3 font-sans font-semibold text-night">
-                Plan my climb
+            <div className="mt-10 space-y-4">
+              <a
+                href="#plan"
+                onClick={() => setOpen(false)}
+                className="flex items-center justify-between rounded-full bg-slate px-6 py-4 font-medium text-snow"
+              >
+                Plan a trek <Arrow />
               </a>
+              <div className="flex flex-wrap gap-x-5 gap-y-1 text-[15px] text-slate-2">
+                {site.phones.map((ph) => (
+                  <a key={ph} href={telHref(ph)}>
+                    {ph}
+                  </a>
+                ))}
+              </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }

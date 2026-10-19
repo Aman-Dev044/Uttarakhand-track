@@ -1,28 +1,26 @@
 import type { Metadata, Viewport } from "next";
-import { JetBrains_Mono, Sora, Unbounded } from "next/font/google";
+import { Bricolage_Grotesque, Geist } from "next/font/google";
 import { Providers } from "@/components/Providers";
 import { site } from "@/data/site";
 import "./globals.css";
 
-const unbounded = Unbounded({
-  variable: "--font-unbounded",
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
+  subsets: ["latin"],
+  axes: ["opsz", "wdth"],
+  display: "swap",
+});
+
+const geist = Geist({
+  variable: "--font-geist",
   subsets: ["latin"],
   display: "swap",
 });
 
-const sora = Sora({
-  variable: "--font-sora",
-  subsets: ["latin"],
-  display: "swap",
-});
+const title = `Uttarakhand Treks 2026–27: Signature Himalayan Treks & Char Dham | ${site.name}`;
 
-const mono = JetBrains_Mono({
-  variable: "--font-jetbrains",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const title = `Uttarakhand Treks Compared: Altitude, Grade & Price | ${site.name}`;
+// Runs before first paint: the intro curtain plays once per browser session
+const introScript = `window.__tcIntro=performance.now();try{if(sessionStorage.getItem("tc-intro"))document.documentElement.dataset.intro="skip";else sessionStorage.setItem("tc-intro","1")}catch(e){}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -33,20 +31,20 @@ export const metadata: Metadata = {
   description: site.description,
   applicationName: site.name,
   keywords: [
-    "Uttarakhand treks",
-    "compare Himalayan treks",
-    "trek finder",
-    "best trek for beginners Uttarakhand",
-    "highest treks in Uttarakhand",
-    "trek altitude and difficulty",
-    "Kedarkantha trek price",
-    "Roopkund trek altitude",
-    "Bali Pass trek",
+    "Uttarakhand treks 2026",
+    "Himalayan treks Uttarakhand",
+    "signature treks India",
+    "Kedarkantha trek",
     "Valley of Flowers trek",
+    "Roopkund trek",
+    "Kuari Pass trek",
+    "Har Ki Dun trek",
+    "best trek by season Uttarakhand",
+    "winter snow treks",
     "Char Dham Yatra route",
+    "Garhwal and Kumaon destinations",
     "Rishikesh rafting",
     "Auli skiing",
-    "Jim Corbett safari",
     "treks from Dehradun",
   ],
   authors: [{ name: site.name, url: site.url }],
@@ -88,17 +86,18 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#060a1c",
-  colorScheme: "dark",
+  themeColor: "#f7f9fb",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en-IN" className={`${unbounded.variable} ${sora.variable} ${mono.variable}`}>
+    <html lang="en-IN" className={`${bricolage.variable} ${geist.variable}`} suppressHydrationWarning>
       <body>
+        <script dangerouslySetInnerHTML={{ __html: introScript }} />
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-volt focus:px-5 focus:py-2 focus:text-night"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[120] focus:rounded-full focus:bg-slate focus:px-5 focus:py-2 focus:text-snow"
         >
           Skip to content
         </a>

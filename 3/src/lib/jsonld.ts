@@ -47,7 +47,7 @@ export function buildJsonLd() {
         "@type": "WebPage",
         "@id": abs("/#webpage"),
         url: site.url,
-        name: "Himalayan Treks in Uttarakhand: Compare Altitude, Grade & Price",
+        name: "Uttarakhand Treks 2026–27: Signature Himalayan Treks & Char Dham",
         description: site.description,
         isPartOf: { "@id": abs("/#website") },
         about: { "@id": abs("/#uttarakhand") },
@@ -57,6 +57,8 @@ export function buildJsonLd() {
       {
         "@type": "TouristDestination",
         "@id": abs("/#uttarakhand"),
+        url: site.url,
+        geo: { "@type": "GeoCoordinates", latitude: 30.0668, longitude: 79.0193 },
         name: "Uttarakhand (Devbhoomi)",
         description:
           "Himalayan state in northern India known for the Char Dham pilgrimage, Rishikesh, Jim Corbett National Park and the UNESCO-listed Nanda Devi and Valley of Flowers National Parks.",
@@ -71,7 +73,7 @@ export function buildJsonLd() {
       {
         "@type": "ItemList",
         "@id": abs("/#treks"),
-        name: "Himalayan treks compared by altitude, grade and price",
+        name: "Signature Himalayan treks in Uttarakhand, Himachal and Kashmir",
         itemListElement: treks.map((t, i) => ({
           "@type": "ListItem",
           position: i + 1,

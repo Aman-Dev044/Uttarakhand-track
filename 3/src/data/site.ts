@@ -10,9 +10,9 @@ const twitterHandle = env(process.env.NEXT_PUBLIC_TWITTER_HANDLE, "trekkingcompa
 export const site = {
   name,
   shortName: name,
-  tagline: "Find your summit",
+  tagline: "Walk the Land of the God",
   description:
-    "Compare 15 Himalayan treks by altitude, grade, days and price, take the 4-step trek finder, and plan Char Dham, rafting and skiing in Uttarakhand.",
+    "Signature Himalayan treks in Uttarakhand for 2026–27: Kedarkantha, Valley of Flowers, Roopkund and more from ₹5,499, with season advice and the Char Dham route.",
   url: env(process.env.NEXT_PUBLIC_SITE_URL, "https://trekkingcompass.com").replace(/\/$/, ""),
   locale: "en_IN",
   phones: env(process.env.NEXT_PUBLIC_PHONES, "+91 70550 48487,+91 70550 48488")
@@ -38,12 +38,12 @@ export const site = {
 };
 
 export const navLinks = [
-  { href: "#finder", label: "Trek finder" },
-  { href: "#compare", label: "Compare" },
-  { href: "#adventures", label: "Adventures" },
+  { href: "#signature", label: "Signature" },
+  { href: "#treks", label: "All treks" },
+  { href: "#seasons", label: "Seasons" },
   { href: "#char-dham", label: "Char Dham" },
   { href: "#destinations", label: "Destinations" },
-  { href: "#faq", label: "FAQs" },
+  { href: "#faq", label: "FAQ" },
 ] as const;
 
 export const telHref = (phone: string) => `tel:${phone.replace(/\s/g, "")}`;

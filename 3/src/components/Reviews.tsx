@@ -2,83 +2,107 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import { reviews } from "@/data/content";
-import { SectionHeading, ease } from "./ui";
+import { Arrow, ease, Label } from "./ui";
+
+const INTERVAL = 7000;
 
 export function Reviews() {
-  const [i, setI] = useState(0);
+  const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const reduce = useReducedMotion();
-  const n = reviews.length;
+  const r = reviews[index];
+  const go = (d: number) => setIndex((i) => (i + d + reviews.length) % reviews.length);
 
   useEffect(() => {
     if (paused || reduce) return;
-    const id = window.setInterval(() => setI((v) => (v + 1) % n), 6000);
-    return () => window.clearInterval(id);
-  }, [paused, reduce, n]);
+    const t = window.setTimeout(() => setIndex((i) => (i + 1) % reviews.length), INTERVAL);
+    return () => window.clearTimeout(t);
+  }, [index, paused, reduce]);
 
   return (
-    <section id="reviews" aria-labelledby="reviews-title" className="relative py-20 sm:py-28">
-      <div className="mx-auto grid max-w-6xl gap-12 px-5 sm:px-8 lg:grid-cols-[1fr_1.3fr] lg:items-center">
-        <div>
-          <SectionHeading code="09" eyebrow="Trail logs" id="reviews-title" title="Notes from the night before the summit." />
-          <div className="mt-8 flex items-center gap-3">
-            <button type="button" onClick={() => setI((v) => (v - 1 + n) % n)} aria-label="Previous review" className="grid size-12 place-items-center rounded-full border border-ice/15 transition hover:border-glacier hover:text-glacier">
-              <ArrowLeft className="size-5" aria-hidden="true" />
+    <section
+      id="reviews"
+      aria-labelledby="reviews-title"
+      aria-roledescription="carousel"
+      className="bg-snow px-5 py-24 sm:px-10 sm:py-36"
+      onPointerEnter={() => setPaused(true)}
+      onPointerLeave={() => setPaused(false)}
+      onFocusCapture={() => setPaused(true)}
+      onBlurCapture={() => setPaused(false)}
+    >
+      <div className="mx-auto max-w-[1600px]">
+        <div className="flex items-center justify-between gap-6">
+          <Label n="09" as="h2" id="reviews-title">
+            From the trail
+          </Label>
+          <div className="flex items-center gap-3">
+            <span className="text-[13px] tabular-nums text-stone">
+              0{index + 1} / 0{reviews.length}
+            </span>
+            <button type="button" onClick={() => go(-1)} className="grid size-11 place-items-center rounded-full ring-1 ring-slate/15 transition hover:bg-slate hover:text-snow">
+              <span className="sr-only">Previous review</span>
+              <Arrow className="size-4 rotate-180" />
             </button>
-            <button type="button" onClick={() => setI((v) => (v + 1) % n)} aria-label="Next review" className="grid size-12 place-items-center rounded-full border border-ice/15 transition hover:border-glacier hover:text-glacier">
-              <ArrowRight className="size-5" aria-hidden="true" />
+            <button type="button" onClick={() => go(1)} className="grid size-11 place-items-center rounded-full ring-1 ring-slate/15 transition hover:bg-slate hover:text-snow">
+              <span className="sr-only">Next review</span>
+              <Arrow className="size-4" />
             </button>
-            <p className="ml-2 font-mono text-xs text-mist" aria-live="polite">
-              {String(i + 1).padStart(2, "0")} / {String(n).padStart(2, "0")}
-            </p>
           </div>
         </div>
 
-        <div
-          className="relative h-[22rem] sm:h-80"
-          onPointerEnter={() => setPaused(true)}
-          onPointerLeave={() => setPaused(false)}
-          onFocusCapture={() => setPaused(true)}
-          onBlurCapture={() => setPaused(false)}
-        >
-          {/* stacked cards behind */}
-          {[2, 1].map((d) => (
-            <div
-              key={d}
-              aria-hidden="true"
-              className="glass absolute inset-0 rounded-[1.75rem]"
-              style={{ transform: `translateY(${d * 14}px) scale(${1 - d * 0.04})`, opacity: 0.5 / d }}
-            />
-          ))}
-          <AnimatePresence mode="popLayout" initial={false}>
+        <div className="relative mt-14 min-h-[19rem] sm:min-h-[20rem] lg:min-h-[19rem]" aria-live="polite">
+          <AnimatePresence mode="wait" initial={false}>
             <motion.figure
-              key={i}
-              initial={{ opacity: 0, y: 30, rotateX: -12 }}
-              animate={{ opacity: 1, y: 0, rotateX: 0 }}
-              exit={{ opacity: 0, y: -30, rotateX: 12 }}
-              transition={{ duration: 0.6, ease }}
-              style={{ transformPerspective: 900 }}
-              className="absolute inset-0 flex flex-col justify-between rounded-[1.75rem] border border-ice/15 bg-night-2 p-6 sm:p-8"
+              key={index}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, transition: { duration: 0.25 } }}
+              transition={{ duration: 0.3 }}
+              aria-roledescription="slide"
+              aria-label={`${index + 1} of ${reviews.length}`}
             >
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-glacier">
-                Log {String(i + 1).padStart(2, "0")} · {reviews[i].trek}
-              </p>
-              <blockquote className="mt-4 font-display text-lg font-medium leading-snug text-ice text-pretty sm:text-2xl">
-                “{reviews[i].quote}”
+              <blockquote className="max-w-[26ch] font-display text-[1.9rem] font-medium leading-[1.12] tracking-[-0.04em] text-slate sm:text-5xl xl:text-[4rem]">
+                {r.quote.split(" ").map((w, i) => (
+                  <span key={i} className="inline-block overflow-hidden align-bottom">
+                    <motion.span
+                      className="inline-block"
+                      initial={{ y: "100%" }}
+                      animate={{ y: "0%" }}
+                      transition={{ duration: 0.8, ease, delay: i * 0.018 }}
+                    >
+                      {i === 0 ? "“" : ""}
+                      {w}
+                      {i === r.quote.split(" ").length - 1 ? "”" : ""}
+                    </motion.span>
+                    &nbsp;
+                  </span>
+                ))}
               </blockquote>
-              <figcaption className="mt-6 flex items-center gap-3 text-sm">
-                <span className="grid size-10 place-items-center rounded-full bg-gradient-to-br from-teal to-violet font-mono text-xs font-semibold text-night">
-                  {reviews[i].name.slice(0, 1)}
-                </span>
-                <span>
-                  <span className="block font-semibold text-ice">{reviews[i].name}</span>
-                  <span className="block text-mist">{reviews[i].city}</span>
-                </span>
+              <figcaption className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-1 text-[15px]">
+                <span className="font-semibold text-slate">{r.name}</span>
+                <span className="text-stone">{r.city}</span>
+                <span className="rounded-full bg-ice px-3 py-1 text-[13px] text-slate-2">{r.trek}</span>
               </figcaption>
             </motion.figure>
           </AnimatePresence>
+        </div>
+
+        <div className="mt-12 grid grid-cols-4 gap-2" aria-hidden="true">
+          {reviews.map((_, i) => (
+            <span key={i} className="relative h-[2px] overflow-hidden bg-frost">
+              {i === index && (
+                <motion.span
+                  key={`${index}-${paused}`}
+                  className="absolute inset-0 origin-left bg-slate"
+                  initial={{ scaleX: reduce ? 1 : 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: paused || reduce ? 0 : INTERVAL / 1000, ease: "linear" }}
+                />
+              )}
+              {i < index && <span className="absolute inset-0 bg-slate/40" />}
+            </span>
+          ))}
         </div>
       </div>
     </section>
