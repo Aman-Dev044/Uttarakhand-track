@@ -254,5 +254,11 @@
     "source": "https://commons.wikimedia.org/wiki/File:Camping_at_foothills_of_himalayas.jpg",
     "width": 1200,
     "height": 900
+  },
+  "logo": {
+    "title": "Hindu temple (3D), Fluent Emoji",
+    "author": "Microsoft",
+    "license": "MIT",
+    "source": "https://github.com/microsoft/fluentui-emoji"
   }
 }

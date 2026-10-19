@@ -254,5 +254,11 @@
     "source": "https://commons.wikimedia.org/wiki/File:Camping_at_foothills_of_himalayas.jpg",
     "width": 1200,
     "height": 900
+  },
+  "logo": {
+    "title": "Hindu temple (1f6d5), Noto Emoji",
+    "author": "Google",
+    "license": "Apache 2.0",
+    "source": "https://github.com/googlefonts/noto-emoji"
   }
 }

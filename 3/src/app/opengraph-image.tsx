@@ -3,7 +3,6 @@ import { join } from "node:path";
 import { readFile } from "node:fs/promises";
 import { site } from "@/data/site";
 import { treks } from "@/data/content";
-import { Emblem } from "@/components/Emblem";
 
 export const alt = `${site.name}: signature Himalayan treks in Uttarakhand for the 2026–27 season`;
 export const size = { width: 1200, height: 630 };
@@ -11,6 +10,7 @@ export const contentType = "image/png";
 
 const hero = await readFile(join(process.cwd(), "public/images/hero.jpg"), "base64");
 const heroSrc = `data:image/jpeg;base64,${hero}`;
+const logo = await readFile(join(process.cwd(), "public/logo.png"), "base64");
 const from = Math.min(...treks.map((t) => t.price)).toLocaleString("en-IN");
 
 export default function OpengraphImage() {
@@ -20,7 +20,8 @@ export default function OpengraphImage() {
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", width: 560, padding: "36px 20px 36px 44px", color: "#0f1720" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14, fontSize: 26, fontWeight: 600 }}>
             <div style={{ display: "flex", borderRadius: 12, overflow: "hidden", boxShadow: "0 0 0 1px rgba(15,23,32,0.1)" }}>
-              <Emblem size={48} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={`data:image/png;base64,${logo}`} width={48} height={48} alt="" />
             </div>
             {site.name}
           </div>

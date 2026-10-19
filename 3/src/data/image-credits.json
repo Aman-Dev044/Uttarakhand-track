@@ -262,5 +262,11 @@
     "source": "https://commons.wikimedia.org/wiki/File:Brahmatal.jpg",
     "width": 1280,
     "height": 782
+  },
+  "logo": {
+    "title": "Hindu temple (1f6d5), Twemoji",
+    "author": "Twitter, Inc and other contributors",
+    "license": "CC BY 4.0",
+    "source": "https://github.com/jdecked/twemoji"
   }
 }

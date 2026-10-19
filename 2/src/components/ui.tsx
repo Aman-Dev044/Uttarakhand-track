@@ -3,7 +3,7 @@
 import { useId } from "react";
 import { motion, type Variants } from "motion/react";
 import { site } from "@/data/site";
-import { Emblem } from "./Emblem";
+import Image from "next/image";
 
 export const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -189,7 +189,7 @@ export function Logo({ className }: { className?: string }) {
   return (
     <span className={`inline-flex items-center gap-2.5 ${className ?? ""}`}>
       <span className="block size-11 shrink-0 overflow-hidden rounded-full">
-        <Emblem className="size-full" />
+        <Image src="/logo.png" alt="" width={96} height={96} className="size-full" />
       </span>
       <span className="leading-none">
         <span className="block font-display text-xl">{site.name}</span>

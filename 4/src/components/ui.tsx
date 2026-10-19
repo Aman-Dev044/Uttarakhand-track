@@ -3,7 +3,7 @@
 import { useId } from "react";
 import { motion, type Variants } from "motion/react";
 import { site } from "@/data/site";
-import { Emblem } from "./Emblem";
+import Image from "next/image";
 
 export const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -230,12 +230,10 @@ export function Garland({ className, swags = 4 }: { className?: string; swags?: 
 
 export function Logo({ tone = "dark" }: { tone?: "dark" | "light" }) {
   const light = tone === "light";
-  // Navbar, footer and credits can render a logo at once, so gradient ids must be unique per instance
-  const id = useId().replace(/[^\w-]/g, "");
   return (
     <span className="flex items-center gap-3">
       <span className="block size-12 shrink-0 overflow-hidden rounded-full ring-1 ring-brass-light/60">
-        <Emblem id={id} className="size-full" />
+        <Image src="/logo.png" alt="" width={96} height={96} className="size-full" />
       </span>
       <span className="leading-none">
         <span className={`block font-display text-xl font-semibold tracking-tight ${light ? "text-ivory" : "text-maroon-deep"}`}>
