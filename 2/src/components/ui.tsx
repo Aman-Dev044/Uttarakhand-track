@@ -3,6 +3,7 @@
 import { useId } from "react";
 import { motion, type Variants } from "motion/react";
 import { site } from "@/data/site";
+import { Emblem } from "./Emblem";
 
 export const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -187,11 +188,9 @@ export function ChapterHead({
 export function Logo({ className }: { className?: string }) {
   return (
     <span className={`inline-flex items-center gap-2.5 ${className ?? ""}`}>
-      <svg viewBox="0 0 40 40" className="size-9 shrink-0" aria-hidden="true">
-        <circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" strokeWidth="1.6" strokeDasharray="3 2.4" />
-        <path d="M20 6 24 20 20 34 16 20Z" fill="var(--color-vermilion)" />
-        <path d="M20 6 24 20H16Z" fill="var(--color-ink)" />
-      </svg>
+      <span className="block size-11 shrink-0 overflow-hidden rounded-full">
+        <Emblem className="size-full" />
+      </span>
       <span className="leading-none">
         <span className="block font-display text-xl">{site.name}</span>
         <span className="block font-hand text-[15px] text-graphite">field journal · est. {site.foundedYear}</span>

@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { readFile } from "node:fs/promises";
 import { site } from "@/data/site";
 import { treks } from "@/data/content";
+import { Emblem } from "@/components/Emblem";
 
 export const alt = `${site.name}: signature Himalayan treks in Uttarakhand for the 2026–27 season`;
 export const size = { width: 1200, height: 630 };
@@ -18,11 +19,9 @@ export default function OpengraphImage() {
       <div style={{ width: "100%", height: "100%", display: "flex", background: "#f7f9fb", padding: 28, gap: 28 }}>
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", width: 560, padding: "36px 20px 36px 44px", color: "#0f1720" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14, fontSize: 26, fontWeight: 600 }}>
-            <svg width="40" height="40" viewBox="0 0 64 64">
-              <path d="M8 50 27 17l8.5 14.5 6-8.5L57 50Z" fill="#0f1720" />
-              <path d="m27 17 7 11.8-7-3.2-5.6 4.2Z" fill="#6f9fc4" />
-              <circle cx="48" cy="14" r="4.5" fill="#e0482f" />
-            </svg>
+            <div style={{ display: "flex", borderRadius: 12, overflow: "hidden", boxShadow: "0 0 0 1px rgba(15,23,32,0.1)" }}>
+              <Emblem size={48} />
+            </div>
             {site.name}
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>

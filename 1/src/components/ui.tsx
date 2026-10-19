@@ -1,8 +1,9 @@
 "use client";
 
 import { motion, useInView, animate } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { site } from "@/data/site";
+import { Emblem } from "./Emblem";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -99,14 +100,16 @@ export function CompassGlyph({ className }: { className?: string }) {
 }
 
 export function Logo({ light = true }: { light?: boolean }) {
+  // Navbar, mobile menu and footer each render a logo, so gradient ids must be unique per instance
+  const id = useId().replace(/[^\w-]/g, "");
   return (
     <span className="inline-flex items-center gap-2.5">
       <span
-        className={`grid size-10 place-items-center rounded-full border ${
-          light ? "border-snow/30 text-snow" : "border-ink/20 text-ink"
+        className={`block size-11 shrink-0 overflow-hidden rounded-full ring-1 ${
+          light ? "ring-snow/25" : "ring-ink/15"
         }`}
       >
-        <CompassGlyph className="size-6 text-saffron" />
+        <Emblem id={id} className="size-full" />
       </span>
       <span className={`leading-none ${light ? "text-snow" : "text-ink"}`}>
         <span className="block font-display text-lg font-semibold tracking-tight">{site.name}</span>

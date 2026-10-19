@@ -11,6 +11,7 @@ import {
   type HTMLMotionProps,
 } from "motion/react";
 import { site } from "@/data/site";
+import { Emblem } from "./Emblem";
 
 export const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -35,11 +36,9 @@ export function scrollToId(id: string) {
 export function Logo({ light = false }: { light?: boolean }) {
   return (
     <span className="inline-flex items-center gap-2.5">
-      <svg viewBox="0 0 32 32" className="size-7" aria-hidden="true">
-        <path d="M2 27 13 8l5 8.5 3.5-5L30 27Z" fill={light ? "#f7f9fb" : "#0f1720"} />
-        <path d="m13 8 4 6.8-4-1.8-3.2 2.4Z" fill="#6f9fc4" />
-        <circle cx="25.5" cy="6.5" r="2.5" fill="#e0482f" />
-      </svg>
+      <span className={`block size-9 shrink-0 overflow-hidden rounded-[10px] ring-1 ${light ? "ring-snow/15" : "ring-slate/10"}`}>
+        <Emblem className="size-full" />
+      </span>
       <span className={`whitespace-nowrap font-display text-[17px] font-semibold tracking-[-0.02em] ${light ? "text-snow" : "text-slate"}`}>
         {site.name}
       </span>
