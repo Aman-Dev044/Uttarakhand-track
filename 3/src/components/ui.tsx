@@ -39,7 +39,7 @@ export function Logo({ light = false }: { light?: boolean }) {
         <Image src="/logo.png" alt="" width={96} height={96} className="size-full" />
       </span>
       <span className={`whitespace-nowrap font-display text-[17px] font-semibold tracking-[-0.02em] ${light ? "text-snow" : "text-slate"}`}>
-        Char Dham Yatra
+        Bhakti Ke Shikhar
       </span>
     </span>
   );

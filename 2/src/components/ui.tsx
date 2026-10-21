@@ -191,8 +191,8 @@ export function Logo({ className }: { className?: string }) {
         <Image src="/logo.png" alt="" width={96} height={96} className="size-full" />
       </span>
       <span className="leading-none">
-        <span className="block font-display text-xl">Char Dham Yatra</span>
-        <span className="block font-hand text-[15px] text-graphite">four dhams, one sacred journey</span>
+        <span className="block font-display text-xl">Aastha Ki Yatra</span>
+        <span className="block font-hand text-[15px] text-graphite">a pilgrim&rsquo;s journal of faith</span>
       </span>
     </span>
   );

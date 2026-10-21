@@ -109,9 +109,9 @@ export function Logo({ light = true }: { light?: boolean }) {
         <Image src="/logo.png" alt="" width={96} height={96} className="size-full" />
       </span>
       <span className={`leading-none ${light ? "text-snow" : "text-ink"}`}>
-        <span className="block font-display text-lg font-semibold tracking-tight">Char Dham Yatra</span>
+        <span className="block font-display text-lg font-semibold tracking-tight">Devbhoomi Darshan</span>
         <span className="mt-1 block text-[10px] uppercase tracking-[0.3em] opacity-60">
-          Four Dhams · One Journey
+          Where the Gods Dwell
         </span>
       </span>
     </span>

@@ -33,7 +33,7 @@ export function Navbar() {
         }`}
       >
         <nav aria-label="Primary" className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-6 px-5 sm:px-8">
-          <a href="#top" aria-label="Char Dham Yatra, back to top" className="text-ink">
+          <a href="#top" aria-label="Aastha Ki Yatra, back to top" className="text-ink">
             <Logo />
           </a>
           <ul className="hidden items-center gap-1 lg:flex">

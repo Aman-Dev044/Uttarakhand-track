@@ -235,11 +235,11 @@ export function Logo({ tone = "dark" }: { tone?: "dark" | "light" }) {
         <Image src="/logo.png" alt="" width={96} height={96} className="size-full" />
       </span>
       <span className="leading-none">
-        <span className={`block font-display text-xl font-semibold tracking-tight ${light ? "text-ivory" : "text-maroon-deep"}`}>
-          Char Dham Yatra
+        <span lang="hi" className={`block font-deva text-xl ${light ? "text-ivory" : "text-maroon-deep"}`}>
+          जय बद्री विशाल
         </span>
         <span className={`mt-1 block font-inscription text-[10px] uppercase tracking-[0.25em] ${light ? "text-brass-light" : "text-brass"}`}>
-          Yamunotri to Badrinath
+          Faith of the Four Dhams
         </span>
       </span>
     </span>
