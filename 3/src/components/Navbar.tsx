@@ -39,7 +39,7 @@ export function Navbar() {
         }`}
       >
         <nav aria-label="Main" className="mx-auto flex h-16 max-w-[1600px] items-center justify-between gap-6 px-5 sm:h-[72px] sm:px-10">
-          <a href="#top" aria-label={`${site.name}, back to top`} className="relative z-10">
+          <a href="#top" aria-label="Char Dham Yatra, back to top" className="relative z-10">
             <Logo />
           </a>
           <ul className="hidden items-center gap-1 lg:flex">

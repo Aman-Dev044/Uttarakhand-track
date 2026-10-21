@@ -2,7 +2,6 @@
 
 import { useId } from "react";
 import { motion, type Variants } from "motion/react";
-import { site } from "@/data/site";
 import Image from "next/image";
 
 export const ease = [0.22, 1, 0.36, 1] as const;
@@ -237,10 +236,10 @@ export function Logo({ tone = "dark" }: { tone?: "dark" | "light" }) {
       </span>
       <span className="leading-none">
         <span className={`block font-display text-xl font-semibold tracking-tight ${light ? "text-ivory" : "text-maroon-deep"}`}>
-          {site.name}
+          Char Dham Yatra
         </span>
         <span className={`mt-1 block font-inscription text-[10px] uppercase tracking-[0.25em] ${light ? "text-brass-light" : "text-brass"}`}>
-          Yatra &amp; Treks · {site.address.locality}
+          Yamunotri to Badrinath
         </span>
       </span>
     </span>

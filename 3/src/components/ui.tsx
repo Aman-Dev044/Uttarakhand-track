@@ -10,7 +10,6 @@ import {
   useSpring,
   type HTMLMotionProps,
 } from "motion/react";
-import { site } from "@/data/site";
 import Image from "next/image";
 
 export const ease = [0.22, 1, 0.36, 1] as const;
@@ -40,7 +39,7 @@ export function Logo({ light = false }: { light?: boolean }) {
         <Image src="/logo.png" alt="" width={96} height={96} className="size-full" />
       </span>
       <span className={`whitespace-nowrap font-display text-[17px] font-semibold tracking-[-0.02em] ${light ? "text-snow" : "text-slate"}`}>
-        {site.name}
+        Char Dham Yatra
       </span>
     </span>
   );

@@ -43,7 +43,7 @@ export function Navbar() {
             solid ? "bg-ink/75 shadow-2xl shadow-black/20 ring-1 ring-white/10 backdrop-blur-xl" : "bg-transparent"
           }`}
         >
-          <a href="#top" aria-label={`${site.name} home`}>
+          <a href="#top" aria-label="Char Dham Yatra home">
             <Logo />
           </a>
 

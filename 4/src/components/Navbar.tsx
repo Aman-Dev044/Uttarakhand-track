@@ -35,7 +35,7 @@ export function Navbar() {
         } ${open ? "bg-transparent shadow-none" : ""}`}
       >
         <nav aria-label="Primary" className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-4 sm:px-8">
-          <a href="#top" aria-label={`${site.name} home`} className="relative z-10" onClick={() => setOpen(false)}>
+          <a href="#top" aria-label="Char Dham Yatra home" className="relative z-10" onClick={() => setOpen(false)}>
             <Logo tone={light || open ? "light" : "dark"} />
           </a>
 

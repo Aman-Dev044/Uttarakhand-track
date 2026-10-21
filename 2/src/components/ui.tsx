@@ -2,7 +2,6 @@
 
 import { useId } from "react";
 import { motion, type Variants } from "motion/react";
-import { site } from "@/data/site";
 import Image from "next/image";
 
 export const ease = [0.22, 1, 0.36, 1] as const;
@@ -192,8 +191,8 @@ export function Logo({ className }: { className?: string }) {
         <Image src="/logo.png" alt="" width={96} height={96} className="size-full" />
       </span>
       <span className="leading-none">
-        <span className="block font-display text-xl">{site.name}</span>
-        <span className="block font-hand text-[15px] text-graphite">field journal · est. {site.foundedYear}</span>
+        <span className="block font-display text-xl">Char Dham Yatra</span>
+        <span className="block font-hand text-[15px] text-graphite">four dhams, one sacred journey</span>
       </span>
     </span>
   );
